@@ -14,9 +14,14 @@ func main() {
 
 	api := router.Group("/api")
 	{
-		api.GET("/", func(c *gin.Context) {
+		api.GET("/pong", func(c *gin.Context) {
 			c.JSON(http.StatusOK, gin.H{
 				"message": "pong",
+			})
+		})
+		api.GET("/ping", func(c *gin.Context) {
+			c.JSON(http.StatusOK, gin.H{
+				"message": "ping",
 			})
 		})
 	}
