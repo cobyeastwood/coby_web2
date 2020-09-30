@@ -1,58 +1,62 @@
 package main
 
 import (
+	"encoding/json"
 	"net/http"
+	"os"
+	"path/filepath"
+	"strings"
 
-	"github.com/gin-gonic/contrib/cors"
-	"github.com/gin-gonic/contrib/static"
-	"github.com/gin-gonic/gin"
+	"github.com/go-chi/chi"
+	"github.com/go-chi/chi/middleware"
 )
 
-// GetRoutes takes in all Get routes
-func getRoutes(api *gin.RouterGroup) {
-	api.GET("/pong", func(c *gin.Context) {
-		c.JSON(http.StatusOK, gin.H{
-			"message": "pong",
-		})
-	})
-	api.GET("/ping", func(c *gin.Context) {
-		c.JSON(http.StatusOK, gin.H{
-			"message": "ping",
-			"payload": "worked!",
-		})
-	})
-}
-
-// PostRoutes takes in all Post routes
-func postRoutes(api *gin.RouterGroup) {
-	api.POST("/pong", func(c *gin.Context) {
-		c.JSON(http.StatusOK, gin.H{
-			"message": "pong",
-		})
-	})
-}
-
-func server(router *gin.Engine, port string) {
-
-	config := cors.DefaultConfig()
-
-	// Allow
-	router.Use(cors.New(config))
-
-	router.Use(static.Serve("/", static.LocalFile("./client/build", true)))
-
-	api := router.Group("/api")
-
-	getRoutes(api)
-	postRoutes(api)
-
-	router.Run(":" + port)
-
+type Data struct {
+	Message string `json:"message"`
+	Payload string `json:"payload"`
 }
 
 func main() {
+	r := chi.NewRouter()
+	r.Use(middleware.Logger)
 
-	router := gin.Default()
+	msg1 := Data{"ping", "test"}
+	msg2 := Data{"pong", "test"}
 
-	server(router, "8080")
+	workDir, _ := os.Getwd()
+
+	r.Get("/api/pong", func(w http.ResponseWriter, r *http.Request) {
+		// w.Header().Set("Content-Type", "application/json")
+		json.NewEncoder(w).Encode(msg1)
+	})
+
+	r.Get("/api/ping", func(w http.ResponseWriter, r *http.Request) {
+		// w.Header().Set("Content-Type", "application/json")
+		json.NewEncoder(w).Encode(msg2)
+	})
+
+	filesDir := http.Dir(filepath.Join(workDir, "./client/build"))
+
+	fileServer(r, "/", filesDir)
+
+	http.ListenAndServe(":8080", r)
+}
+
+func fileServer(r chi.Router, path string, root http.FileSystem) {
+	if strings.ContainsAny(path, "{}*") {
+		panic("fileServer does not permit any URL parameters.")
+	}
+
+	if path != "/" && path[len(path)-1] != '/' {
+		r.Get(path, http.RedirectHandler(path+"/", 301).ServeHTTP)
+		path += "/"
+	}
+	path += "*"
+
+	r.Get(path, func(w http.ResponseWriter, r *http.Request) {
+		rctx := chi.RouteContext(r.Context())
+		pathPrefix := strings.TrimSuffix(rctx.RoutePattern(), "/*")
+		fs := http.StripPrefix(pathPrefix, http.FileServer(root))
+		fs.ServeHTTP(w, r)
+	})
 }
