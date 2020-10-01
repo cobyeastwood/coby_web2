@@ -1,26 +1,32 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import './index.css';
 
-import AsyncAxios from './utility/AsyncAxios';
+import AsyncAxios from './hocs/AsyncAxios';
 
-import App from './components/App';
-import Home from './components/Home';
-import NotFound from './components/NotFound';
+import Navbar from './app/components/Navbar';
+// import SideBar from './components/SideBar';
+
+import Home from './app/pages/Home';
+import About from './app/pages/About';
+import Contact from './app/pages/Contact';
+import NotFound from './app/pages/NotFound';
 
 import * as serviceWorker from './serviceWorker';
 
-const AsyncApp = AsyncAxios(App, 'http://localhost:8080/api/ping');
+const AsyncAbout = AsyncAxios(About, 'http://localhost:8080/api/ping');
 const AsyncHome = AsyncAxios(Home, 'http://localhost:8080/api/pong');
+const AsyncContact = AsyncAxios(Contact, 'http://localhost:8080/api/pang');
 
 ReactDOM.render(
   <Router>
-    <Link to="/">app</Link>
-    <Link to="/home">home</Link>
+    <Navbar />
+    {/* <SideBar /> */}
     <Switch>
-      <Route exact path="/" component={AsyncApp} />
-      <Route exact path="/home" component={AsyncHome} />
+      <Route exact path="/" component={AsyncAbout} />
+      <Route exact path="/about" component={AsyncHome} />
+      <Route exact path="/contact" component={AsyncContact} />
       <Route component={NotFound} />
     </Switch>
   </Router>,
