@@ -1,8 +1,7 @@
 package main
 
 import (
-	"encoding/json"
-	"fmt"
+	"controllers/controllers"
 	"net/http"
 	"os"
 	"path"
@@ -13,41 +12,13 @@ import (
 	"github.com/go-chi/chi/middleware"
 )
 
-type Data struct {
-	Message string `json:"message"`
-	Payload string `json:"payload"`
-}
-
-func runn() {
-	fmt.Println("hello")
-}
-
 func main() {
 	r := chi.NewRouter()
 	r.Use(middleware.Logger)
 
-	msg1 := Data{"ping", "test"}
-	msg2 := Data{"pong", "test"}
-	msg3 := Data{"pang", "test"}
-
-	r.Get("/api/pong", func(w http.ResponseWriter, r *http.Request) {
-		// w.Header().Set("Content-Type", "application/json")
-		json.NewEncoder(w).Encode(msg1)
-	})
-
-	r.Get("/api/ping", func(w http.ResponseWriter, r *http.Request) {
-		// w.Header().Set("Content-Type", "application/json")
-		json.NewEncoder(w).Encode(msg2)
-	})
-
-	r.Get("/api/pang", func(w http.ResponseWriter, r *http.Request) {
-		// w.Header().Set("Content-Type", "application/json")
-		json.NewEncoder(w).Encode(msg3)
-	})
+	controllers.Routes(r)
 
 	fileServer(r, "./client/build")
-
-	runn()
 
 	http.ListenAndServe(":8080", r)
 }
