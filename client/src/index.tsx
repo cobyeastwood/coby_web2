@@ -1,7 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import { Provider } from 'react-redux';
 import './index.css';
+
+import store from './app/store/store';
 
 import AsyncAxios from './hocs/AsyncAxios';
 
@@ -20,16 +23,18 @@ const AsyncHome = AsyncAxios(Home, 'http://localhost:8080/api/pong');
 const AsyncContact = AsyncAxios(Contact, 'http://localhost:8080/api/pang');
 
 ReactDOM.render(
-  <Router>
-    <Navbar />
-    {/* <SideBar /> */}
-    <Switch>
-      <Route exact path="/" component={AsyncAbout} />
-      <Route exact path="/about" component={AsyncHome} />
-      <Route exact path="/contact" component={AsyncContact} />
-      <Route component={NotFound} />
-    </Switch>
-  </Router>,
+  <Provider store={store}>
+    <Router>
+      <Navbar />
+      {/* <SideBar /> */}
+      <Switch>
+        <Route exact path="/" component={AsyncAbout} />
+        <Route exact path="/about" component={AsyncHome} />
+        <Route exact path="/contact" component={AsyncContact} />
+        <Route component={NotFound} />
+      </Switch>
+    </Router>
+  </Provider>,
   document.getElementById('root')
 );
 
