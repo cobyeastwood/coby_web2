@@ -8,7 +8,7 @@ export default function (state = initialState, action: any) {
       const { _id, element } = action.payload;
       return {
         _id,
-        element,
+        ...element,
         ...state,
       };
     }
@@ -16,7 +16,7 @@ export default function (state = initialState, action: any) {
       const { _id, element } = action.payload;
       return {
         _id,
-        element,
+        ...element,
         ...state,
       };
     }

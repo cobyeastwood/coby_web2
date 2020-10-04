@@ -9,6 +9,7 @@ import store from './app/store/store';
 import AsyncAxios from './hocs/AsyncAxios';
 
 import Navbar from './app/components/Navbar';
+import Footer from './app/components/Footer';
 
 import Home from './app/pages/Home';
 import About from './app/pages/About';
@@ -24,13 +25,16 @@ const AsyncContact = AsyncAxios(Contact, 'http://localhost:8080/api/pang');
 ReactDOM.render(
   <Provider store={store}>
     <Router>
-      <Navbar />
-      <Switch>
-        <Route exact path="/" component={AsyncHome} />
-        <Route exact path="/about" component={AsyncAbout} />
-        <Route exact path="/contact" component={AsyncContact} />
-        <Route component={NotFound} />
-      </Switch>
+      <div className="container">
+        <Navbar />
+        <Switch>
+          <Route exact path="/" component={AsyncHome} />
+          <Route exact path="/about" component={AsyncAbout} />
+          <Route exact path="/contact" component={AsyncContact} />
+          <Route component={NotFound} />
+        </Switch>
+        <Footer />
+      </div>
     </Router>
   </Provider>,
   document.getElementById('root')

@@ -1,16 +1,27 @@
 import React from 'react';
+import styled from 'styled-components';
 import Button from '../components/Button';
+
+const Head = styled.h2`
+  margin: 2.5rem;
+  text-align: center;
+`;
+
+const P = styled.p`
+  margin: 1rem;
+  text-align: center;
+`;
 
 class Contact extends React.Component<{ data: { message: string } }, {}> {
   render() {
     return (
       <div>
-        <h1>Welcome to my contact page</h1>
-        <p>/contact</p>
-        <p>{this.props.data.message}</p>
-        <Button type="button" className="btn btn-secondary">
+        <Head>Welcome to my contact page</Head>
+        <P>/contact</P>
+        <P>{this.props.data.message}</P>
+        {/* <Button type="button" className="btn btn-secondary">
           Learn More
-        </Button>
+        </Button> */}
       </div>
     );
   }
