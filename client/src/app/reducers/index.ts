@@ -1,25 +1,22 @@
-import Action from '../actions/actionInterface';
 import * as ActionTypes from '../actions/actionTypes';
 
-const initialState = {
-  path: [],
-  clicks: [],
-};
+const initialState = {};
 
-export default function (state = initialState, action: Action) {
+export default function (state = initialState, action: any) {
   switch (action.type) {
-    case ActionTypes.ON_CLICK: {
+    case ActionTypes.ON_CLICKS: {
       const { _id, element } = action.payload;
       return {
         _id,
-        ...element,
+        element,
         ...state,
       };
     }
     case ActionTypes.ON_LOADS: {
-      const { element } = action.payload;
+      const { _id, element } = action.payload;
       return {
-        ...element,
+        _id,
+        element,
         ...state,
       };
     }

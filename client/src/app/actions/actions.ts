@@ -1,19 +1,23 @@
-import Action from './actionInterface';
-import { ON_LOADS, ON_CLICK } from './actionTypes';
+import { ON_LOADS, ON_CLICKS } from './actionTypes';
 
-let clickId: number = 0;
+export const onClicks = (_id: any, element: any) => async (dispatch: any) => {
+  dispatch({
+    type: ON_CLICKS,
+    payload: {
+      _id: _id,
+      element: element,
+    },
+  });
+};
 
-export const onClick = (element: object): Action => ({
-  type: ON_CLICK,
-  payload: {
-    _id: clickId++,
-    ...element,
-  },
-});
+let loadId: number = 0;
 
-export const onLoads = (element: object): Action => ({
-  type: ON_LOADS,
-  payload: {
-    ...element,
-  },
-});
+export const onLoads = (element: any) => async (dispatch: any) => {
+  dispatch({
+    type: ON_LOADS,
+    payload: {
+      _id: loadId++,
+      element: element,
+    },
+  });
+};

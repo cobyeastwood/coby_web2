@@ -1,2 +1,2 @@
-export const ON_LOADS: string = 'ON_LOAD';
-export const ON_CLICK: string = 'ON_CLICK';
+export const ON_LOADS = 'ON_LOAD';
+export const ON_CLICKS = 'ON_CLICKS';

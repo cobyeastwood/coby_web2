@@ -16,14 +16,15 @@ func main() {
 	r := chi.NewRouter()
 	r.Use(middleware.Logger)
 
-	controllers.Routes(r)
+	controllers.Routes(r) // Add CRUD routes
 
-	fileServer(r, "./client/build")
+	FileServer(r, "./client/build")
 
 	http.ListenAndServe(":8080", r)
 }
 
-func fileServer(r chi.Router, static string) {
+// FileServer Custom Static Files
+func FileServer(r chi.Router, static string) {
 
 	public := "/"
 

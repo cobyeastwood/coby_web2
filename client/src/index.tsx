@@ -9,7 +9,6 @@ import store from './app/store/store';
 import AsyncAxios from './hocs/AsyncAxios';
 
 import Navbar from './app/components/Navbar';
-// import SideBar from './components/SideBar';
 
 import Home from './app/pages/Home';
 import About from './app/pages/About';
@@ -26,10 +25,9 @@ ReactDOM.render(
   <Provider store={store}>
     <Router>
       <Navbar />
-      {/* <SideBar /> */}
       <Switch>
-        <Route exact path="/" component={AsyncAbout} />
-        <Route exact path="/about" component={AsyncHome} />
+        <Route exact path="/" component={AsyncHome} />
+        <Route exact path="/about" component={AsyncAbout} />
         <Route exact path="/contact" component={AsyncContact} />
         <Route component={NotFound} />
       </Switch>
