@@ -10,6 +10,16 @@ export const P = styled.p`
   text-align: center;
 `;
 
+export const Span = styled.div`
+  margin: 5rem;
+  text-align: center;
+`;
+
+export const Section = styled.section`
+  margin: 4rem;
+  text-align: left;
+`;
+
 export const Button = styled.button`
   margin-top: 2rem;
 `;

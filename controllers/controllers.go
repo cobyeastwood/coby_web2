@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"net/http"
+	"os"
 
 	"github.com/go-chi/chi"
 )
@@ -22,23 +23,12 @@ type Typi struct {
 	Completed bool   `json:"completed"`
 }
 
-// type Originator struct {
-// 	ID   int    `json:"id"`
-// 	Name string `json:"name"`
-// }
-
-// Quote json struct
-type Quote struct {
-	ID         int    `json:"id"`
-	LangCode   string `json:"language_code"`
-	Content    string `json:"content"`
-	URL        string `json:"url"`
-	Originator map[string]interface{}
-}
-
 // GetTypicodeTodos func
 func GetTypicodeTodos(ch chan []Typi) {
-	resp, err := http.Get("https://jsonplaceholder.typicode.com/todos")
+
+	typiURL := os.Getenv("TYPI_URL")
+
+	resp, err := http.Get(typiURL)
 
 	if err != nil {
 		fmt.Println(err)
@@ -57,27 +47,21 @@ func GetTypicodeTodos(ch chan []Typi) {
 }
 
 // GetQuotes func
-func GetQuotes(ch chan []Quote) {
+func GetQuotes(ch chan map[string]interface{}) {
 
-	url := "https://rapidapi.p.rapidapi.com/quotes/random/"
+	rapidURL := os.Getenv("RAPID_URL")
+	rapidHost := os.Getenv("RAPID_HOST")
+	rapidKey := os.Getenv("RAPID_KEY")
 
-	req, _ := http.NewRequest("GET", url, nil)
+	req, _ := http.NewRequest("GET", rapidURL, nil)
 
-	req.Header.Add("x-rapidapi-host", "quotes15.p.rapidapi.com")
-	req.Header.Add("x-rapidapi-key", "75977ac2c3msh5902e2849fbb40bp169709jsn626a021033df")
+	req.Header.Add("x-rapidapi-host", rapidHost)
+	req.Header.Add("x-rapidapi-key", rapidKey)
 
 	resp, err := http.DefaultClient.Do(req)
 
-	var quote []Quote
+	quote := make(map[string]interface{})
 	json.NewDecoder(resp.Body).Decode(&quote)
-
-	// body, _ := ioutil.ReadAll(resp.Body)
-
-	// str := func(body []byte) string {
-	// 	str := string(body)
-	// 	val := strings.ReplaceAll(str, "\r?\n", "")
-	// 	return val
-	// }
 
 	if err != nil {
 		fmt.Println(err)
@@ -124,7 +108,7 @@ func Routes(r *chi.Mux) {
 
 	r.Get("/api/quote", func(w http.ResponseWriter, r *http.Request) {
 
-		ch := make(chan []Quote) // Goroutines speed it up a little
+		ch := make(chan map[string]interface{}) // Goroutines speed it up a little
 
 		go GetQuotes(ch)
 

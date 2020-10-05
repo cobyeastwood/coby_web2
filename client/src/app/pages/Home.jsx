@@ -1,0 +1,148 @@
+import React, { useState, useEffect } from 'react';
+import styled from 'styled-components';
+
+import { v4 as uuidv4 } from 'uuid';
+import { connect } from 'react-redux';
+import { Head, P, Section } from '../styles/component.styles';
+import { ON_CLICKS } from '../actions/actionTypes';
+
+const axios = require('axios').default;
+
+export const P2 = styled.p`
+  margin: 2rem;
+  text-align: left;
+`;
+
+const Home = (props) => {
+  const [typi, setTypi] = useState([]);
+  const [bool, setBool] = useState(false);
+
+  useEffect(() => {
+    async function axiosGet() {
+      const { data } = await axios.get(
+        `https://jsonplaceholder.typicode.com/todos/${Math.floor(
+          Math.random() * 101
+        )}`
+      );
+      setTypi([data]);
+    }
+    axiosGet();
+  }, []);
+
+  return (
+    <React.Fragment>
+      <Head>Welcome to my home page</Head>
+      <P>/</P>
+      <P>{props.data.message}</P>
+      <Section>
+        <h1>Home</h1>
+        <br />
+        <p className="text-break">
+          Let's talk about coding! Site is made using a Golang backend, with a
+          TypeScript, and JavaScript frontend.
+        </p>
+        <br />
+        <button
+          type="button"
+          className="btn btn-light"
+          onClick={() => (!bool ? setBool(true) : setBool(false))}
+        >
+          Test Backend
+        </button>
+        <span>
+          {bool
+            ? typi.map((t) => (
+                <P2>
+                  userId: {t.userId}
+                  <br />
+                  title: {t.title}
+                  <br />
+                  id: {t.id}
+                  <br />
+                  completed: {t.completed === true ? 'true' : 'false'}
+                </P2>
+              ))
+            : null}
+        </span>
+        <br />
+        <button type="button" className="btn btn-link">
+          <a href="https://github.com/cobyeast/coffee_restful">Source code</a>
+        </button>
+      </Section>
+      <Section>
+        <h1>Work Experience</h1>
+        <br />
+        <h5>
+          <strong>Gobii</strong>
+        </h5>
+        <h6>April 2020 - Present // Software Developer</h6>
+        <p>
+          As a part-time Software Developer, I create iteractive web components
+          for realestate listing platforms including Gobii, and others. In this
+          position, I use version control – Git/GitHub, and work with React,
+          Node, MongoDB, and Postgres. I have also done Dev Ops projects using
+          Python.
+        </p>
+        <h5>
+          <strong>Crosspoint Evaluations</strong>
+        </h5>
+        <h6>June 2019 - January 2020 // Marketing Operations Manager</h6>
+        <p>
+          As Marketing Operations Manager, I lead and enable a team of three
+          sales associates, craft business development campaigns, manage our
+          sales pipeline using Pipedrive, conduct competitive analysis, track
+          key performance indicators, and promote our services through direct
+          marketing channels.
+        </p>
+        <p>
+          I have also been learning how to use new tools such as Mailchimp,
+          Google Adwords, Google Analytics, Google Search Console, Yesware, CRM,
+          and refine my skills in SEO, HTML5, CSS3, and email marketing.
+        </p>
+      </Section>
+      <Section>
+        <h5>
+          <strong>Table Public Relations</strong>
+        </h5>
+        <h6>June 2018 - January 2019 // Associate</h6>
+        <p>
+          As an Associate, I worked closely with my account managers, CEOs, and
+          marketing teams of venture-backed technology startups to research,
+          brainstorm, strategize, and construct communication campaigns.
+        </p>
+        <p>
+          I learned how to write blogs, pitches, and press releases. I also
+          learned how to conduct keyword analysis, research media trends, and
+          craft communication campaigns, executive profiles, and proposals of
+          work. During this time, I refined my skills in Excel, copywriting, and
+          email marketing.
+        </p>
+      </Section>
+      <Section>
+        <h5>
+          <strong>Pantry Fuel</strong>
+        </h5>
+        <h6>Septemper 2017 - January 2018 // Growth Marketing Intern</h6>
+        <p>
+          As a Growth Marketing Intern, I worked closely with Pantry Fuel's CEO
+          to improve sales and retention rates. In my role, I attended local
+          marketing events, met with small businesses to promote our services,
+          crafted blogs, and ran all social media accounts.
+        </p>
+      </Section>
+    </React.Fragment>
+  );
+};
+
+const clicks = (e) => ({
+  type: ON_CLICKS,
+  payload: { _id: uuidv4(), element: e.target },
+});
+
+const mapDispatchToProps = (dipatch) => {
+  return {
+    clicks: (e) => dipatch(clicks(e)),
+  };
+};
+
+export default connect(null, mapDispatchToProps)(Home);

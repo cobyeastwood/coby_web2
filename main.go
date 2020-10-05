@@ -2,6 +2,7 @@ package main
 
 import (
 	"controllers/controllers"
+	"fmt"
 	"net/http"
 	"os"
 	"path"
@@ -10,17 +11,33 @@ import (
 
 	"github.com/go-chi/chi"
 	"github.com/go-chi/chi/middleware"
+	"github.com/joho/godotenv"
 )
 
 func main() {
+
+	loadsEnv()
+
 	r := chi.NewRouter()
 	r.Use(middleware.Logger)
 
 	controllers.Routes(r) // Add CRUD routes
 
-	FileServer(r, "./client/build")
+	port := os.Getenv("PORT")
+	static := os.Getenv("STATIC")
 
-	http.ListenAndServe(":8080", r)
+	FileServer(r, static)
+
+	http.ListenAndServe(":"+port, r)
+
+}
+
+func loadsEnv() {
+	err := godotenv.Load()
+
+	if err != nil {
+		fmt.Println(err)
+	}
 }
 
 // FileServer Custom Static Files
