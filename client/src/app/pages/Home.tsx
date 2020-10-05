@@ -1,24 +1,13 @@
 import React from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import { connect } from 'react-redux';
-import styled from 'styled-components';
+import { Head, P } from '../styles/component.styles';
 
-import Button from '../components/Button';
 import { ON_CLICKS } from '../actions/actionTypes';
-
-const Head = styled.h2`
-  margin: 2.5rem;
-  text-align: center;
-`;
-
-const P = styled.p`
-  margin: 1rem;
-  text-align: center;
-`;
 
 const Home = (props: { data: { message: string }; clicks: any }) => {
   return (
-    <div>
+    <React.Fragment>
       <Head>Welcome to my home page</Head>
       <P>/</P>
       <P>{props.data.message}</P>
@@ -29,7 +18,7 @@ const Home = (props: { data: { message: string }; clicks: any }) => {
       >
         Learn More
       </Button> */}
-    </div>
+    </React.Fragment>
   );
 };
 

@@ -1,10 +1,12 @@
 import React from 'react';
+import { Head, P } from '../styles/component.styles';
 
 class NotFound extends React.Component {
   render() {
     return (
       <React.Fragment>
-        <h1>404 - Not Found</h1> <p>Sorry, this page was not found.</p>
+        <Head>404 - Not Found</Head>
+        <P>Sorry, this page was not found.</P>
       </React.Fragment>
     );
   }
