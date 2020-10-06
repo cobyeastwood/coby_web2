@@ -19,11 +19,7 @@ const Home = (props) => {
 
   useEffect(() => {
     async function axiosGet() {
-      const { data } = await axios.get(
-        `https://jsonplaceholder.typicode.com/todos/${Math.floor(
-          Math.random() * 101
-        )}`
-      );
+      const { data } = await axios.get('http://localhost:8080/api/typicode');
       setTypi([data]);
     }
     axiosGet();
@@ -38,8 +34,9 @@ const Home = (props) => {
         <h1>Home</h1>
         <br />
         <p className="text-break">
-          Let's talk about coding! Site is made using a Golang backend, with a
-          TypeScript, and JavaScript frontend.
+          Let's talk about coding! Love REST Apis? Check out below to see them
+          at work. Site is made using a Golang backend, with a TypeScript, and
+          JavaScript frontend.
         </p>
         <br />
         <button
@@ -60,6 +57,10 @@ const Home = (props) => {
                   id: {t.id}
                   <br />
                   completed: {t.completed === true ? 'true' : 'false'}
+                  <br />
+                  <br />
+                  Still curious? Checkout the{' '}
+                  <a href="http://localhost:8080/api/typicode">route</a>.
                 </P2>
               ))
             : null}

@@ -3,6 +3,7 @@ package controllers
 import (
 	"encoding/json"
 	"fmt"
+	"math/rand"
 	"net/http"
 	"os"
 
@@ -24,11 +25,13 @@ type Typi struct {
 }
 
 // GetTypicodeTodos func
-func GetTypicodeTodos(ch chan []Typi) {
+func GetTypicodeTodos(ch chan Typi) {
+
+	randInt := fmt.Sprint(rand.Intn(100))
 
 	typiURL := os.Getenv("TYPI_URL")
 
-	resp, err := http.Get(typiURL)
+	resp, err := http.Get(typiURL + randInt)
 
 	if err != nil {
 		fmt.Println(err)
@@ -36,7 +39,7 @@ func GetTypicodeTodos(ch chan []Typi) {
 
 	defer resp.Body.Close()
 
-	var typi []Typi
+	var typi Typi
 	err2 := json.NewDecoder(resp.Body).Decode(&typi)
 
 	if err2 != nil {
@@ -95,7 +98,7 @@ func Routes(r *chi.Mux) {
 
 	r.Get("/api/typicode", func(w http.ResponseWriter, r *http.Request) {
 
-		ch := make(chan []Typi) // Goroutines speed it up a little
+		ch := make(chan Typi) // Goroutines speed it up a little
 
 		go GetTypicodeTodos(ch)
 

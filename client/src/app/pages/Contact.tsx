@@ -13,10 +13,11 @@ class Contact extends React.Component<{ data: { message: string } }, {}> {
           <h1>Contact</h1>
           <br />
           <p>
-            Thank you for checking out my website! If you have any further
-            questions or would like to check out more of my work feel free to
-            explore my GitHub profile — <strong>cobyeast</strong>. Otherwise,
-            you can email me at <strong>cobyeastwood-&#64;-gmail.com</strong>.
+            Thanks for stopping bye! Think this website is cool? Explore my
+            GitHub profile — <strong>cobyeast</strong>. Not cool? Let me know!
+            If you have any further questions or are just checking it out, feel
+            free to contact me an email at{' '}
+            <strong>cobyeastwood-&#64;-gmail.com</strong>.
           </p>
         </Section>
         {/* <Button type="button" className="btn btn-secondary">

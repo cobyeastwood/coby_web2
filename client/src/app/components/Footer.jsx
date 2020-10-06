@@ -15,6 +15,7 @@ const P = styled.p`
 const A = styled.a``;
 
 const Footer = () => {
+  const [active, setActive] = useState(null);
   const [quote, setQuote] = useState([]);
 
   useEffect(() => {
@@ -34,28 +35,43 @@ const Footer = () => {
           className="text-justify btn-group btn-group-toggle"
           data-toggle="buttons"
         >
-          <label className="btn btn-secondary">
+          <label
+            className={`btn btn-secondary ${
+              active === 'LinkedIn' ? 'active' : null
+            }`}
+            onClick={() => setActive('LinkedIn')}
+          >
             <A
               className="text-reset text-decoration-none"
               href="https://www.linkedin.com/in/coby-eastwood-196b12152/"
             >
-              LinkedIn
+              <i className="fab fa-linkedin-in" />
             </A>
           </label>
-          <label className="btn btn-secondary">
+          <label
+            className={`btn btn-secondary ${
+              active === 'Github' ? 'active' : null
+            }`}
+            onClick={() => setActive('Github')}
+          >
             <A
               className="text-reset text-decoration-none"
               href="https://github.com/cobyeast"
             >
-              Github
+              <i class="fab fa-github" />
             </A>
           </label>
-          <label className="btn btn-secondary">
+          <label
+            className={`btn btn-secondary ${
+              active === 'Twitter' ? 'active' : null
+            }`}
+            onClick={() => setActive('Twitter')}
+          >
             <A
               className="text-reset text-decoration-none"
               href="https://twitter.com/cobyeastwood"
             >
-              Twitter
+              <i class="fab fa-twitter" />
             </A>
           </label>
         </div>
