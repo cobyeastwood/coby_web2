@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Span } from '../styles/component.styles';
+import * as backup from '../on_fails/data.json';
 import styled from 'styled-components';
 
 const axios = require('axios').default;
@@ -16,7 +17,7 @@ const A = styled.a``;
 
 const Footer = () => {
   const [active, setActive] = useState(null);
-  const [quote, setQuote] = useState([]);
+  const [quote, setQuote] = useState([backup[1]]);
 
   useEffect(() => {
     async function axiosGet() {

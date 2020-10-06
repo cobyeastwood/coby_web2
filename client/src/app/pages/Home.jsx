@@ -5,6 +5,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { connect } from 'react-redux';
 import { Head, P, Section } from '../styles/component.styles';
 import { ON_CLICKS } from '../actions/actionTypes';
+import * as backup from '../on_fails/data.json';
 
 const axios = require('axios').default;
 
@@ -14,7 +15,7 @@ export const P2 = styled.p`
 `;
 
 const Home = (props) => {
-  const [typi, setTypi] = useState([]);
+  const [typi, setTypi] = useState([backup[0]]);
   const [bool, setBool] = useState(false);
 
   useEffect(() => {
@@ -57,10 +58,14 @@ const Home = (props) => {
                   id: {t.id}
                   <br />
                   completed: {t.completed === true ? 'true' : 'false'}
-                  <br />
-                  <br />
-                  Still curious? Checkout the{' '}
-                  <a href="http://localhost:8080/api/typicode">route</a>.
+                  {t.id !== 104 ? (
+                    <React.Fragment>
+                      <br />
+                      <br />
+                      Still curious? Checkout the{' '}
+                      <a href="http://localhost:8080/api/typicode">route</a>.
+                    </React.Fragment>
+                  ) : null}
                 </P2>
               ))
             : null}
