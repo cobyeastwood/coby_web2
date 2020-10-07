@@ -4,10 +4,10 @@ import { Helmet } from 'react-helmet';
 
 import { v4 as uuidv4 } from 'uuid';
 import { connect } from 'react-redux';
-import { Head, Section, P } from '../styles/component.styles';
+import { Head, Section } from '../styles/component.styles';
 import { ON_CLICKS } from '../actions/actionTypes';
 
-import * as backup from '../on_fails/data.json';
+import * as backup from '../json/data.json';
 import * as helm from '../json/content.json';
 
 const axios = require('axios').default;

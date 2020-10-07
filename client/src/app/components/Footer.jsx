@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Span } from '../styles/component.styles';
-import * as backup from '../on_fails/data.json';
+import * as backup from '../json/data.json';
 import styled from 'styled-components';
 
 const axios = require('axios').default;
@@ -26,8 +26,6 @@ const Footer = () => {
     }
     axiosGet();
   }, []);
-
-  console.log(quote);
 
   return (
     <React.Fragment>
