@@ -1,7 +1,7 @@
 import React from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import { connect } from 'react-redux';
-import { Head, P, Section } from '../styles/component.styles';
+import { Head, Section, P } from '../styles/component.styles';
 
 import { ON_CLICKS } from '../actions/actionTypes';
 
@@ -9,8 +9,6 @@ const About = (props: { data: { message: string }; clicks: any }) => {
   return (
     <React.Fragment>
       <Head>Welcome to my about page</Head>
-      <P>/about</P>
-      <P>{props.data.message}</P>
       <Section>
         <h1>About</h1>
         <br />
@@ -20,13 +18,14 @@ const About = (props: { data: { message: string }; clicks: any }) => {
         <p>
           I am a Software Developer with hands-on experience with over eleven
           different high-growth technology startups. Over the last year, I have
-          fallen in love with programming and have begun taking on Software
-          Development projects at mid-sized startups like{' '}
-          <a href="https://gobii.com/">Gobii</a>. I began my career working as
-          an associate at Table Public Relations, a small firm located downtown
-          San Francisco and now work as a marketing operations manager at
-          Crosspoint Evaluations.
+          begun taking on Software Development projects at mid-sized startups
+          like <a href="https://gobii.com/">Gobii</a>. I began my professional
+          career working as an associate at Table Public Relations, a small firm
+          located downtown San Francisco and now work as a marketing operations
+          manager at Crosspoint Evaluations.
         </p>
+      </Section>
+      <Section>
         <h5>
           <strong>Myself</strong>
         </h5>

@@ -7,8 +7,6 @@ class Contact extends React.Component<{ data: { message: string } }, {}> {
     return (
       <React.Fragment>
         <Head>Welcome to my contact page</Head>
-        <P>/contact</P>
-        <P>{this.props.data.message}</P>
         <Section>
           <h1>Contact</h1>
           <br />

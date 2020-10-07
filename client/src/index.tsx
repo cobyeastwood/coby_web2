@@ -18,9 +18,9 @@ import NotFound from './app/pages/NotFound';
 
 import * as serviceWorker from './serviceWorker';
 
-const AsyncAbout = AsyncAxios(About, 'http://localhost:8080/api/ping');
-const AsyncHome = AsyncAxios(Home, 'http://localhost:8080/api/pong');
-const AsyncContact = AsyncAxios(Contact, 'http://localhost:8080/api/pang');
+const AsyncAbout = AsyncAxios(About, '/api/ping');
+const AsyncHome = AsyncAxios(Home, '/api/pong');
+const AsyncContact = AsyncAxios(Contact, '/api/pang');
 
 ReactDOM.render(
   <Provider store={store}>

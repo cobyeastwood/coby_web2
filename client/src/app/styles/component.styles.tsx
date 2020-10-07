@@ -2,6 +2,7 @@ import styled from 'styled-components';
 
 export const Head = styled.h2`
   margin: 2.5rem;
+  margin-bottom: 8rem;
   text-align: center;
 `;
 
@@ -16,7 +17,7 @@ export const Span = styled.div`
 `;
 
 export const Section = styled.section`
-  margin: 4rem;
+  margin: 3rem;
   text-align: left;
 `;
 

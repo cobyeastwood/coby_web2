@@ -3,7 +3,7 @@ import styled from 'styled-components';
 
 import { v4 as uuidv4 } from 'uuid';
 import { connect } from 'react-redux';
-import { Head, P, Section } from '../styles/component.styles';
+import { Head, Section, P } from '../styles/component.styles';
 import { ON_CLICKS } from '../actions/actionTypes';
 import * as backup from '../on_fails/data.json';
 
@@ -29,15 +29,13 @@ const Home = (props) => {
   return (
     <React.Fragment>
       <Head>Welcome to my home page</Head>
-      <P>/</P>
-      <P>{props.data.message}</P>
       <Section>
         <h1>Home</h1>
         <br />
         <p className="text-break">
-          Let's talk about coding! Love REST Apis? Check out below to see them
-          at work. Site is made using a Golang backend, with a TypeScript, and
-          JavaScript frontend.
+          Let's talk about coding! Love RESTful APIs? Check out below to see
+          them at work. Site is made using a Golang backend, with a TypeScript,
+          and JavaScript frontend.
         </p>
         <br />
         <button
@@ -72,7 +70,7 @@ const Home = (props) => {
         </span>
         <br />
         <button type="button" className="btn btn-link">
-          <a href="https://github.com/cobyeast/coffee_restful">Source code</a>
+          <a href="https://github.com/cobyeast/coby_web">Source code</a>
         </button>
       </Section>
       <Section>
@@ -83,27 +81,29 @@ const Home = (props) => {
         </h5>
         <h6>April 2020 - Present // Software Developer</h6>
         <p>
-          As a part-time Software Developer, I create iteractive web components
-          for realestate listing platforms including Gobii, and others. In this
+          As a Software Developer, I create iteractive web components for
+          realestate listing platforms including Gobii, and others. In this
           position, I use version control – Git/GitHub, and work with React,
-          Node, MongoDB, and Postgres. I have also done Dev Ops projects using
-          Python.
+          Node, MongoDB, and Postgres. In this position, I have also done Dev
+          Ops projects using Python.
         </p>
+      </Section>
+      <Section>
         <h5>
           <strong>Crosspoint Evaluations</strong>
         </h5>
         <h6>June 2019 - January 2020 // Marketing Operations Manager</h6>
         <p>
-          As Marketing Operations Manager, I lead and enable a team of three
-          sales associates, craft business development campaigns, manage our
-          sales pipeline using Pipedrive, conduct competitive analysis, track
-          key performance indicators, and promote our services through direct
-          marketing channels.
+          As a Marketing Operations Manager, I lead and enabled a team of three
+          sales associates, crafted business development campaigns, managed our
+          sales pipeline using Pipedrive, conducted competitive analysis,
+          tracked key performance indicators, and promoted our services through
+          direct marketing channels.
         </p>
         <p>
-          I have also been learning how to use new tools such as Mailchimp,
-          Google Adwords, Google Analytics, Google Search Console, Yesware, CRM,
-          and refine my skills in SEO, HTML5, CSS3, and email marketing.
+          In this position, I worked with tools such as Google Analytics, Google
+          Search Console, Yesware, CRMs, and refined my skills in SEO, HTML5,
+          CSS3, and email marketing.
         </p>
       </Section>
       <Section>
