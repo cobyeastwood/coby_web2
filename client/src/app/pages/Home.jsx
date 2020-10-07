@@ -1,11 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
+import { Helmet } from 'react-helmet';
 
 import { v4 as uuidv4 } from 'uuid';
 import { connect } from 'react-redux';
 import { Head, Section, P } from '../styles/component.styles';
 import { ON_CLICKS } from '../actions/actionTypes';
+
 import * as backup from '../on_fails/data.json';
+import * as helm from '../json/content.json';
 
 const axios = require('axios').default;
 
@@ -28,6 +31,12 @@ const Home = (props) => {
 
   return (
     <React.Fragment>
+      <Helmet>
+        <meta charSet="utf-8" />
+        <title>Coby Eastwood: Home</title>
+        <meta name="description" content={helm.content} />
+        <link rel="canonical" href="http://cobyeastwood.com/"></link>
+      </Helmet>
       <Head>Welcome to my home page</Head>
       <Section>
         <h1>Home</h1>

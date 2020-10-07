@@ -1,13 +1,22 @@
 import React from 'react';
+import { Helmet } from 'react-helmet';
+
 import { v4 as uuidv4 } from 'uuid';
 import { connect } from 'react-redux';
 import { Head, Section, P } from '../styles/component.styles';
 
 import { ON_CLICKS } from '../actions/actionTypes';
+import * as helm from '../json/content.json';
 
 const About = (props: { data: { message: string }; clicks: any }) => {
   return (
     <React.Fragment>
+      <Helmet>
+        <meta charSet="utf-8" />
+        <title>Coby Eastwood: About</title>
+        <meta name="description" content={helm.content} />
+        <link rel="canonical" href="http://cobyeastwood.com/about"></link>
+      </Helmet>
       <Head>Welcome to my about page</Head>
       <Section>
         <h1>About</h1>
