@@ -25,7 +25,7 @@ const Footer = () => {
 
   useEffect(() => {
     async function axiosGet() {
-      const { data } = await axios.get('http://localhost:8080/api/quote');
+      const { data } = await axios.get('/api/quote');
       setQuote([data]);
     }
     axiosGet();
@@ -94,10 +94,10 @@ const Footer = () => {
           <blockquote className="blockquote mb-0">
             {quote.map((q, i) => (
               <React.Fragment key={i++}>
-                <P key={i++}>{q.content}</P>
+                <P key={i++}>{q.content || ''}</P>
                 <footer key={i++} className="blockquote-footer">
-                  <cite key={i++} title={q.originator.name}>
-                    {q.originator.name}
+                  <cite key={i++} title={q.originator.name || ''}>
+                    {q.originator.name || ''}
                   </cite>
                 </footer>
               </React.Fragment>

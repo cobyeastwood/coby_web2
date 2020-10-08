@@ -28,7 +28,7 @@ const Home = ({ clicks }) => {
     }
 
     async function axiosGet() {
-      const { data } = await axios.get('http://localhost:8080/api/typicode');
+      const { data } = await axios.get('/api/typicode');
       setTypi([data]);
     }
     axiosGet();
@@ -79,7 +79,7 @@ const Home = ({ clicks }) => {
                       <br />
                       <br />
                       Still curious? Checkout the{' '}
-                      <a href="http://localhost:8080/api/typicode">route</a>.
+                      <a href="/api/typicode">route</a>.
                     </React.Fragment>
                   ) : null}
                 </P2>
