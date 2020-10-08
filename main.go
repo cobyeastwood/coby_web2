@@ -2,7 +2,6 @@ package main
 
 import (
 	"controllers/controllers"
-	"fmt"
 	"net/http"
 	"os"
 	"path"
@@ -18,17 +17,21 @@ func main() {
 
 	loadsEnv()
 
+	port := ":" + os.Getenv("PORT")
+	static := os.Getenv("STATIC")
+
 	r := chi.NewRouter()
+
 	r.Use(middleware.Logger)
+	// r.Use(controllers.Limit)
 
 	controllers.Routes(r) // Add CRUD routes
 
-	port := os.Getenv("PORT")
-	static := os.Getenv("STATIC")
-
 	FileServer(r, static)
 
-	http.ListenAndServe(":"+port, r)
+	http.ListenAndServe(port, r)
+
+	// http.Serve(autocert.NewListener(":"+port), r)
 
 }
 
@@ -36,7 +39,6 @@ func loadsEnv() {
 	err := godotenv.Load()
 
 	if err != nil {
-		fmt.Println(err)
 	}
 }
 

@@ -28,8 +28,10 @@ const Home = ({ clicks }) => {
     }
 
     async function axiosGet() {
-      const { data } = await axios.get('/api/typicode');
-      setTypi([data]);
+      try {
+        const { data } = await axios.get('/api/typicode');
+        setTypi([data]);
+      } catch (err) {}
     }
     axiosGet();
   }, []);

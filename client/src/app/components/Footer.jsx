@@ -25,11 +25,13 @@ const Footer = () => {
 
   useEffect(() => {
     async function axiosGet() {
-      const { data } = await axios.get('/api/quote');
-      setQuote([data]);
+      try {
+        const { data } = await axios.get('/api/quote');
+        setQuote([data]);
+      } catch (err) {}
     }
     axiosGet();
-  }, []);
+  }, [quote]);
 
   return (
     <React.Fragment>

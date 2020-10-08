@@ -1,56 +1,141 @@
 package controllers
 
 import (
+	crand "crypto/rand"
+	"encoding/binary"
 	"encoding/json"
 	"fmt"
-	"math/rand"
+	"log"
+
+	rand "math/rand"
+	"net"
 	"net/http"
 	"os"
+	"sync"
+	"time"
 
 	"github.com/go-chi/chi"
+	"golang.org/x/time/rate"
 )
 
-// Data json struct
-type Data struct {
-	Message string `json:"message"`
-	Payload string `json:"payload"`
+// Routes Mux
+func Routes(r *chi.Mux) {
+
+	r.Get("/api/v1/typicode", typicodes)
+	r.Get("/api/v1/quote", quotes)
+
 }
 
-// Typi json struct
-type Typi struct {
-	UserID    int    `json:"userId"`
-	ID        int    `json:"id"`
-	Title     string `json:"title"`
-	Completed bool   `json:"completed"`
+type visitor struct {
+	limit    *rate.Limiter
+	lastSeen time.Time
+}
+
+var visitors = make(map[string]*visitor)
+var mu sync.Mutex
+
+func initVisit() {
+	go cleanupVisitors()
+}
+
+func getVisitor(ip string) *rate.Limiter {
+	mu.Lock()
+	defer mu.Unlock()
+
+	v, exists := visitors[ip]
+
+	if !exists {
+		limit := rate.NewLimiter(1, 5)
+		visitors[ip] = &visitor{limit, time.Now()}
+		return limit
+	}
+
+	v.lastSeen = time.Now()
+
+	return v.limit
+}
+
+func cleanupVisitors() {
+	for {
+		time.Sleep(time.Minute)
+
+		mu.Lock()
+		for ip, v := range visitors {
+			if time.Since(v.lastSeen) > 3*time.Minute {
+				delete(visitors, ip)
+			}
+		}
+		mu.Unlock()
+	}
+}
+
+// Limit requests
+func Limit(next http.Handler) http.Handler {
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		ip, _, err := net.SplitHostPort(r.RemoteAddr)
+		if err != nil {
+			log.Println(err.Error())
+			http.Error(w, "Internal Server Error", http.StatusInternalServerError)
+			return
+		}
+		limit := getVisitor(ip)
+		if limit.Allow() == false {
+			http.Error(w, http.StatusText(429), http.StatusTooManyRequests)
+			return
+		}
+		next.ServeHTTP(w, r)
+	})
 }
 
 // GetTypicodeTodos func
-func GetTypicodeTodos(ch chan Typi) {
+func GetTypicodeTodos(ch chan map[string]interface{}) {
 
-	randInt := fmt.Sprint(rand.Intn(100))
+	mu.Lock()
+
+	var src cryptoSource
+	rnd := rand.New(src)
+
+	randInt := fmt.Sprint(rnd.Intn(100))
 
 	typiURL := os.Getenv("TYPI_URL")
 
 	resp, err := http.Get(typiURL + randInt)
 
 	if err != nil {
-		fmt.Println(err)
 	}
 
 	defer resp.Body.Close()
+	defer mu.Unlock()
 
-	var typi Typi
+	var typi map[string]interface{}
 	err2 := json.NewDecoder(resp.Body).Decode(&typi)
 
 	if err2 != nil {
-		fmt.Println(err2)
 	}
 
 	ch <- typi // Send it back
+
+}
+
+type cryptoSource struct{}
+
+func (s cryptoSource) Seed(seed int64) {}
+
+func (s cryptoSource) Int63() int64 {
+	return int64(s.Uint64() & ^uint64(1<<63))
+}
+
+func (s cryptoSource) Uint64() (v uint64) {
+	err := binary.Read(crand.Reader, binary.BigEndian, &v)
+	if err != nil {
+	}
+	return v
 }
 
 // GetQuotes func
 func GetQuotes(ch chan map[string]interface{}) {
+
+	mu.Lock()
 
 	rapidURL := os.Getenv("RAPID_URL")
 	rapidHost := os.Getenv("RAPID_HOST")
@@ -67,41 +152,39 @@ func GetQuotes(ch chan map[string]interface{}) {
 	json.NewDecoder(resp.Body).Decode(&quote)
 
 	if err != nil {
-		fmt.Println(err)
 	}
 
 	defer resp.Body.Close()
+	defer mu.Unlock()
 
 	ch <- quote // Send it back
+
 }
 
-// Routes Mux
-func Routes(r *chi.Mux) {
+func typicodes(w http.ResponseWriter, r *http.Request) {
 
-	r.Get("/api/typicode", func(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-Type", "application/json")
 
-		ch := make(chan Typi) // Goroutines speed it up a little
+	ch := make(chan map[string]interface{}) // Goroutines speed it up a little
 
-		go GetTypicodeTodos(ch)
+	go GetTypicodeTodos(ch)
 
-		jsonIn := <-ch
+	jsonIn := <-ch
 
-		w.Header().Set("Content-Type", "application/json")
-		json.NewEncoder(w).Encode(jsonIn)
+	json.NewEncoder(w).Encode(jsonIn)
 
-	})
+}
 
-	r.Get("/api/quote", func(w http.ResponseWriter, r *http.Request) {
+func quotes(w http.ResponseWriter, r *http.Request) {
 
-		ch := make(chan map[string]interface{}) // Goroutines speed it up a little
+	w.Header().Set("Content-Type", "application/json")
 
-		go GetQuotes(ch)
+	ch := make(chan map[string]interface{}) // Goroutines speed it up a little
 
-		jsonIn := <-ch
+	go GetQuotes(ch)
 
-		w.Header().Set("Content-Type", "application/json")
-		json.NewEncoder(w).Encode(jsonIn)
+	jsonIn := <-ch
 
-	})
+	json.NewEncoder(w).Encode(jsonIn)
 
 }
