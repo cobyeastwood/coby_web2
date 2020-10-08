@@ -1,7 +1,20 @@
 import React from 'react';
-import { Head, P } from '../styles/component.styles';
+import styled from 'styled-components';
+
+import { P } from '../styles/component.styles';
+import { change } from '../utility/analytics';
+
+const Head = styled.h1`
+  margin: 2.5rem;
+  text-align: center;
+`;
 
 class NotFound extends React.Component {
+  componentDidMount() {
+    if (window) {
+      change(window);
+    }
+  }
   render() {
     return (
       <React.Fragment>

@@ -7,16 +7,16 @@ export default function (state = initialState, action: any) {
     case ActionTypes.ON_CLICKS: {
       const { _id, element } = action.payload;
       return {
-        _id,
-        ...element,
+        _id: _id,
+        element: element,
         ...state,
       };
     }
     case ActionTypes.ON_LOADS: {
       const { _id, element } = action.payload;
       return {
-        _id,
-        ...element,
+        _id: _id,
+        element: element,
         ...state,
       };
     }

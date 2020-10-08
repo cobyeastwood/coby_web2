@@ -4,9 +4,10 @@ import thunk from 'redux-thunk';
 import rootReducer from '../reducers/index';
 
 const initialState: any = {
-  _id: 0,
+  _id: null,
   element: '',
 };
+
 const middleware = [thunk];
 
 export default store(

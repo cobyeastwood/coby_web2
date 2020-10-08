@@ -2,9 +2,15 @@ import React from 'react';
 import { Helmet } from 'react-helmet';
 
 import { Head, Section } from '../styles/component.styles';
+import { change } from '../utility/analytics';
 import * as helm from '../json/content.json';
 
 class Contact extends React.Component<{ data: { message: string } }, {}> {
+  componentDidMount() {
+    if (window) {
+      change(window);
+    }
+  }
   render() {
     return (
       <React.Fragment>
@@ -25,9 +31,6 @@ class Contact extends React.Component<{ data: { message: string } }, {}> {
             <strong>cobyeastwood-&#64;-gmail.com</strong>.
           </p>
         </Section>
-        {/* <Button type="button" className="btn btn-secondary">
-          Learn More
-        </Button> */}
       </React.Fragment>
     );
   }

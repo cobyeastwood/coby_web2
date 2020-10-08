@@ -1,14 +1,17 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Helmet } from 'react-helmet';
 
-import { v4 as uuidv4 } from 'uuid';
-import { connect } from 'react-redux';
 import { Head, Section } from '../styles/component.styles';
+import { change } from '../utility/analytics';
 
-import { ON_CLICKS } from '../actions/actionTypes';
 import * as helm from '../json/content.json';
 
-const About = (props: { data: { message: string }; clicks: any }) => {
+const About = (props: any) => {
+  useEffect(() => {
+    if (window) {
+      change(window);
+    }
+  }, []);
   return (
     <React.Fragment>
       <Helmet>
@@ -25,13 +28,12 @@ const About = (props: { data: { message: string }; clicks: any }) => {
           <strong>My Journey</strong>
         </h5>
         <p>
-          I am a Software Developer with hands-on experience with over eleven
-          different high-growth technology startups. Over the last year, I have
-          begun taking on Software Development projects at mid-sized startups
-          like <a href="https://gobii.com/">Gobii</a>. I began my professional
-          career working as an associate at Table Public Relations, a small firm
-          located downtown San Francisco and now work as a marketing operations
-          manager at Crosspoint Evaluations.
+          I began in San Francisco, California working in Communications and
+          Marketing, first as an associate at Table Public Relations and after a
+          Marketing Operations Manager at Crosspoint Evaluations. During this
+          time, I gained hands-on experience with over eleven different
+          high-growth technology startups. Now, I work as a remote Software
+          Developer at <a href="https://gobii.com/">Gobii</a>.
         </p>
       </Section>
       <Section>
@@ -39,32 +41,14 @@ const About = (props: { data: { message: string }; clicks: any }) => {
           <strong>Myself</strong>
         </h5>
         <p>
-          In my free time, I will either be running, reading psychology books,
-          hanging at a coffee shop or munching on some pastries. I am personally
-          interested in running, coding, reading, cryptocurrencies, stocks,
-          fashion, marketing, border collies, and good-mood food.
+          In my free time, I will either be running, reading psychology books or
+          hanging at a coffee shop. I am personally interested in running,
+          coding, reading, cryptocurrencies, stocks, fashion, marketing, border
+          collies, and good-mood food.
         </p>
       </Section>
-      {/* <Button
-        type="button"
-        className="btn btn-secondary"
-        onClick={(e: any) => clicks(e)}
-      >
-        Learn More
-      </Button> */}
     </React.Fragment>
   );
 };
 
-const clicks = (e: any) => ({
-  type: ON_CLICKS,
-  payload: { _id: uuidv4(), element: e.target },
-});
-
-const mapDispatchToProps = (dipatch: any) => {
-  return {
-    clicks: (e: any) => dipatch(clicks(e)),
-  };
-};
-
-export default connect(null, mapDispatchToProps)(About);
+export default About;

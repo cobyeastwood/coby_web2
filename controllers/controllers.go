@@ -78,24 +78,6 @@ func GetQuotes(ch chan map[string]interface{}) {
 // Routes Mux
 func Routes(r *chi.Mux) {
 
-	r.Get("/api/pong", func(w http.ResponseWriter, r *http.Request) {
-		w.Header().Set("Content-Type", "application/json")
-		msg1 := Data{"ping", "test"}
-		json.NewEncoder(w).Encode(msg1)
-	})
-
-	r.Get("/api/ping", func(w http.ResponseWriter, r *http.Request) {
-		w.Header().Set("Content-Type", "application/json")
-		msg2 := Data{"pong", "test"}
-		json.NewEncoder(w).Encode(msg2)
-	})
-
-	r.Get("/api/pang", func(w http.ResponseWriter, r *http.Request) {
-		w.Header().Set("Content-Type", "application/json")
-		msg3 := Data{"pang", "test"}
-		json.NewEncoder(w).Encode(msg3)
-	})
-
 	r.Get("/api/typicode", func(w http.ResponseWriter, r *http.Request) {
 
 		ch := make(chan Typi) // Goroutines speed it up a little

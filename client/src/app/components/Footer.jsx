@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Span } from '../styles/component.styles';
+import { events } from '../utility/analytics';
+
 import * as backup from '../json/data.json';
 import styled from 'styled-components';
 
@@ -13,7 +15,9 @@ const P = styled.p`
   font-size: 16px;
 `;
 
-const A = styled.a``;
+const A = styled.a`
+  font-size: 16px;
+`;
 
 const Footer = () => {
   const [active, setActive] = useState(null);
@@ -38,7 +42,10 @@ const Footer = () => {
             className={`btn btn-secondary ${
               active === 'LinkedIn' ? 'active' : null
             }`}
-            onClick={() => setActive('LinkedIn')}
+            onClick={(e) => {
+              setActive('LinkedIn');
+              events(e);
+            }}
           >
             <A
               className="text-reset text-decoration-none"
@@ -51,26 +58,32 @@ const Footer = () => {
             className={`btn btn-secondary ${
               active === 'Github' ? 'active' : null
             }`}
-            onClick={() => setActive('Github')}
+            onClick={(e) => {
+              setActive('Github');
+              events(e);
+            }}
           >
             <A
               className="text-reset text-decoration-none"
               href="https://github.com/cobyeast"
             >
-              <i class="fab fa-github" />
+              <i className="fab fa-github" />
             </A>
           </label>
           <label
             className={`btn btn-secondary ${
               active === 'Twitter' ? 'active' : null
             }`}
-            onClick={() => setActive('Twitter')}
+            onClick={(e) => {
+              setActive('Twitter');
+              events(e);
+            }}
           >
             <A
               className="text-reset text-decoration-none"
               href="https://twitter.com/cobyeastwood"
             >
-              <i class="fab fa-twitter" />
+              <i className="fab fa-twitter" />
             </A>
           </label>
         </div>
@@ -79,11 +92,13 @@ const Footer = () => {
         <div className="card-header">Quote</div>
         <div className="card-body">
           <blockquote className="blockquote mb-0">
-            {quote.map((q) => (
-              <React.Fragment>
-                <P>{q.content}</P>
-                <footer className="blockquote-footer">
-                  <cite title={q.originator.name}>{q.originator.name}</cite>
+            {quote.map((q, i) => (
+              <React.Fragment key={i++}>
+                <P key={i++}>{q.content}</P>
+                <footer key={i++} className="blockquote-footer">
+                  <cite key={i++} title={q.originator.name}>
+                    {q.originator.name}
+                  </cite>
                 </footer>
               </React.Fragment>
             ))}

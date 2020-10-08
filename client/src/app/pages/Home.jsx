@@ -5,6 +5,7 @@ import { Helmet } from 'react-helmet';
 import { v4 as uuidv4 } from 'uuid';
 import { connect } from 'react-redux';
 import { Head, Section } from '../styles/component.styles';
+import { change, events } from '../utility/analytics';
 import { ON_CLICKS } from '../actions/actionTypes';
 
 import * as backup from '../json/data.json';
@@ -17,11 +18,15 @@ export const P2 = styled.p`
   text-align: left;
 `;
 
-const Home = (props) => {
+const Home = ({ clicks }) => {
   const [typi, setTypi] = useState([backup[0]]);
   const [bool, setBool] = useState(false);
 
   useEffect(() => {
+    if (window) {
+      change(window);
+    }
+
     async function axiosGet() {
       const { data } = await axios.get('http://localhost:8080/api/typicode');
       setTypi([data]);
@@ -50,7 +55,11 @@ const Home = (props) => {
         <button
           type="button"
           className="btn btn-light"
-          onClick={() => (!bool ? setBool(true) : setBool(false))}
+          onClick={(e) => {
+            !bool ? setBool(true) : setBool(false);
+            events(e);
+            clicks(e);
+          }}
         >
           Test Backend
         </button>
@@ -91,10 +100,11 @@ const Home = (props) => {
         <h6>April 2020 - Present // Software Developer</h6>
         <p>
           As a Software Developer, I create iteractive web components for
-          realestate listing platforms including Gobii, and others. In this
-          position, I use version control – Git/GitHub, and work with React,
-          Node, MongoDB, and Postgres. In this position, I have also done Dev
-          Ops projects using Python.
+          realestate listing platforms including{' '}
+          <a href="https://gobii.com/">Gobii</a>, and others. In this position,
+          I use version control – Git/GitHub, and work with React, Node,
+          MongoDB, and Postgres. In this position, I have also completed Dev Ops
+          tasks using packages like Asyncio, and Aiohttp in Python.
         </p>
       </Section>
       <Section>
@@ -151,7 +161,7 @@ const Home = (props) => {
 
 const clicks = (e) => ({
   type: ON_CLICKS,
-  payload: { _id: uuidv4(), element: e.target },
+  payload: { _id: uuidv4(), element: e.type },
 });
 
 const mapDispatchToProps = (dipatch) => {

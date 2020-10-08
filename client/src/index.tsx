@@ -1,12 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import './index.css';
 
 import store from './app/store/store';
-
-import AsyncAxios from './hocs/AsyncAxios';
 
 import Navbar from './app/components/Navbar';
 import Footer from './app/components/Footer';
@@ -16,11 +15,11 @@ import About from './app/pages/About';
 import Contact from './app/pages/Contact';
 import NotFound from './app/pages/NotFound';
 
+import { initGA } from './app/utility/analytics';
+
 import * as serviceWorker from './serviceWorker';
 
-const AsyncAbout = AsyncAxios(About, '/api/ping');
-const AsyncHome = AsyncAxios(Home, '/api/pong');
-const AsyncContact = AsyncAxios(Contact, '/api/pang');
+initGA();
 
 ReactDOM.render(
   <Provider store={store}>
@@ -28,9 +27,9 @@ ReactDOM.render(
       <div className="container">
         <Navbar />
         <Switch>
-          <Route exact path="/" component={AsyncHome} />
-          <Route exact path="/about" component={AsyncAbout} />
-          <Route exact path="/contact" component={AsyncContact} />
+          <Route exact path="/" component={Home} />
+          <Route exact path="/about" component={About} />
+          <Route exact path="/contact" component={Contact} />
           <Route component={NotFound} />
         </Switch>
         <Footer />
