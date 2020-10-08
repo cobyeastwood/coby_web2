@@ -1,12 +1,14 @@
 package main
 
 import (
-	"controllers/controllers"
 	"net/http"
 	"os"
 	"path"
 	"path/filepath"
 	"strings"
+
+	"github.com/cobyeastwood/coby_web/controllers"
+	xss "github.com/cobyeastwood/coby_web/middlewares"
 
 	"github.com/go-chi/chi"
 	"github.com/go-chi/chi/middleware"
@@ -23,7 +25,7 @@ func main() {
 	r := chi.NewRouter()
 
 	r.Use(middleware.Logger)
-	// r.Use(controllers.Limit)
+	r.Use(xss.Limit)
 
 	controllers.Routes(r) // Add CRUD routes
 
