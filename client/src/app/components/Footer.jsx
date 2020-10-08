@@ -26,12 +26,14 @@ const Footer = () => {
   useEffect(() => {
     async function axiosGet() {
       try {
-        const { data } = await axios.get('/api/quote');
-        setQuote([data]);
+        const { status, data } = await axios.get('/api/v1/quote');
+        if (status === 200 && data && data.id) {
+          setQuote([data]);
+        }
       } catch (err) {}
     }
     axiosGet();
-  }, [quote]);
+  }, []);
 
   return (
     <React.Fragment>
@@ -94,16 +96,21 @@ const Footer = () => {
         <div className="card-header">Quote</div>
         <div className="card-body">
           <blockquote className="blockquote mb-0">
-            {quote.map((q, i) => (
-              <React.Fragment key={i++}>
-                <P key={i++}>{q.content || ''}</P>
-                <footer key={i++} className="blockquote-footer">
-                  <cite key={i++} title={q.originator.name || ''}>
-                    {q.originator.name || ''}
-                  </cite>
-                </footer>
-              </React.Fragment>
-            ))}
+            {quote
+              ? quote.map((q, i) => (
+                  <React.Fragment key={i++}>
+                    <P key={i++}>{q.content || ''}</P>
+                    <footer key={i++} className="blockquote-footer">
+                      <cite
+                        key={i++}
+                        title={q.originator.name ? q.originator.name : ''}
+                      >
+                        {q.originator.name ? q.originator.name : ''}
+                      </cite>
+                    </footer>
+                  </React.Fragment>
+                ))
+              : null}
           </blockquote>
         </div>
       </Div>
