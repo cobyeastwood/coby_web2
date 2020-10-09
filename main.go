@@ -1,76 +1,58 @@
 package main
 
 import (
+	"log"
 	"net/http"
 	"os"
-	"path"
-	"path/filepath"
-	"strings"
+	"time"
 
 	"github.com/cobyeastwood/coby_web/controllers"
-	xss "github.com/cobyeastwood/coby_web/middlewares"
+	"github.com/cobyeastwood/coby_web/servers"
+	"github.com/go-chi/cors"
+	"github.com/go-chi/httprate"
+	g "github.com/joho/godotenv"
 
 	"github.com/go-chi/chi"
 	"github.com/go-chi/chi/middleware"
-	"github.com/joho/godotenv"
 )
 
 func main() {
 
-	loadsEnv()
+	func() {
+		err := g.Load()
+
+		if err != nil {
+			log.Fatal(err)
+		}
+	}()
 
 	port := ":" + os.Getenv("PORT")
 	static := os.Getenv("STATIC")
 
 	r := chi.NewRouter()
 
+	// Add Middlewares
 	r.Use(middleware.Logger)
-	r.Use(xss.Limit)
+	r.Use(httprate.LimitByIP(50, 1*time.Minute))
+	r.Use(cors.Handler(cors.Options{
+		AllowedOrigins:   []string{"*"},
+		AllowedMethods:   []string{"GET"},
+		AllowedHeaders:   []string{"Accept", "Authorization", "Content-Type"},
+		ExposedHeaders:   []string{"Link"},
+		AllowCredentials: false,
+		MaxAge:           300,
+	}))
+	r.Use(middleware.StripSlashes)
+	r.Use(middleware.Timeout(60 * time.Second))
 
-	controllers.Routes(r) // Add CRUD routes
+	// Add Routes
+	controllers.Routes(r)
 
-	FileServer(r, static)
+	// Serve Static Files
+	servers.FileServer(r, static)
 
 	http.ListenAndServe(port, r)
 
 	// http.Serve(autocert.NewListener(":"+port), r)
 
-}
-
-func loadsEnv() {
-	err := godotenv.Load()
-
-	if err != nil {
-	}
-}
-
-// FileServer Custom Static Files
-func FileServer(r chi.Router, static string) {
-
-	public := "/"
-
-	if strings.ContainsAny(public, "{}*") {
-		panic("FileServer does not permit URL parameters.")
-	}
-
-	root, _ := filepath.Abs(static)
-
-	if _, err := os.Stat(root); os.IsNotExist(err) {
-		panic("Static Documents Directory Not Found")
-	}
-
-	fs := http.StripPrefix(public, http.FileServer(http.Dir(root)))
-
-	if public != "/" && public[len(public)-1] != '/' {
-		r.Get(public, http.RedirectHandler(public+"/", 301).ServeHTTP)
-		public += "/"
-	}
-
-	r.Get(public+"*", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		file := strings.Replace(r.RequestURI, public, "/", 1)
-		if _, err := os.Stat(root + file); os.IsNotExist(err) {
-			http.ServeFile(w, r, path.Join(root, "index.html"))
-		}
-		fs.ServeHTTP(w, r)
-	}))
 }

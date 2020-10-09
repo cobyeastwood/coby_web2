@@ -5,6 +5,8 @@ import (
 	"encoding/binary"
 	"encoding/json"
 	"fmt"
+	"io"
+	"log"
 
 	rand "math/rand"
 	"net/http"
@@ -19,38 +21,36 @@ var mu sync.Mutex
 // Routes Mux
 func Routes(r *chi.Mux) {
 
-	r.Get("/api/v1/typicode", typicodes)
-	r.Get("/api/v1/quote", quotes)
+	r.Get("/api/v1/typicode", getRoutes(typicodes))
+	r.Get("/api/v1/quote", getRoutes(quotes))
 
 }
 
-// GetTypicodeTodos func
-func GetTypicodeTodos(ch chan map[string]interface{}) {
+func getRoutes(gofunc func(chan map[string]interface{})) func(w http.ResponseWriter, r *http.Request) {
+	return func(w http.ResponseWriter, r *http.Request) {
+		w.Header().Set("Content-Type", "application/json")
+
+		ch := make(chan map[string]interface{})
+
+		go gofunc(ch)
+
+		jsonOut := <-ch
+
+		json.NewEncoder(w).Encode(jsonOut)
+
+	}
+}
+
+func goGorountine(ch chan map[string]interface{}, body io.ReadCloser) {
 
 	mu.Lock()
 
-	var src cryptoSource
-	rnd := rand.New(src)
+	jsonIn := make(map[string]interface{})
+	json.NewDecoder(body).Decode(&jsonIn)
 
-	randInt := fmt.Sprint(rnd.Intn(100))
-
-	typiURL := os.Getenv("TYPI_URL")
-
-	resp, err := http.Get(typiURL + randInt)
-
-	if err != nil {
-	}
-
-	defer resp.Body.Close()
 	defer mu.Unlock()
 
-	var typi map[string]interface{}
-	err2 := json.NewDecoder(resp.Body).Decode(&typi)
-
-	if err2 != nil {
-	}
-
-	ch <- typi // Send it back
+	ch <- jsonIn // Send it back
 
 }
 
@@ -65,14 +65,33 @@ func (s cryptoSource) Int63() int64 {
 func (s cryptoSource) Uint64() (v uint64) {
 	err := binary.Read(crand.Reader, binary.BigEndian, &v)
 	if err != nil {
+		log.Fatal(err)
 	}
 	return v
 }
 
-// GetQuotes func
-func GetQuotes(ch chan map[string]interface{}) {
+func typicodes(ch chan map[string]interface{}) {
 
-	mu.Lock()
+	var src cryptoSource
+	rnd := rand.New(src)
+
+	randInt := fmt.Sprint(rnd.Intn(100))
+
+	typiURL := os.Getenv("TYPI_URL")
+
+	re, err := http.Get(typiURL + randInt)
+
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	goGorountine(ch, re.Body)
+
+	defer re.Body.Close()
+
+}
+
+func quotes(ch chan map[string]interface{}) {
 
 	rapidURL := os.Getenv("RAPID_URL")
 	rapidHost := os.Getenv("RAPID_HOST")
@@ -83,45 +102,14 @@ func GetQuotes(ch chan map[string]interface{}) {
 	req.Header.Add("x-rapidapi-host", rapidHost)
 	req.Header.Add("x-rapidapi-key", rapidKey)
 
-	resp, err := http.DefaultClient.Do(req)
-
-	quote := make(map[string]interface{})
-	json.NewDecoder(resp.Body).Decode(&quote)
+	re, err := http.DefaultClient.Do(req)
 
 	if err != nil {
+		log.Fatal(err)
 	}
 
-	defer resp.Body.Close()
-	defer mu.Unlock()
+	goGorountine(ch, re.Body)
 
-	ch <- quote // Send it back
-
-}
-
-func typicodes(w http.ResponseWriter, r *http.Request) {
-
-	w.Header().Set("Content-Type", "application/json")
-
-	ch := make(chan map[string]interface{}) // Goroutines speed it up a little
-
-	go GetTypicodeTodos(ch)
-
-	jsonIn := <-ch
-
-	json.NewEncoder(w).Encode(jsonIn)
-
-}
-
-func quotes(w http.ResponseWriter, r *http.Request) {
-
-	w.Header().Set("Content-Type", "application/json")
-
-	ch := make(chan map[string]interface{}) // Goroutines speed it up a little
-
-	go GetQuotes(ch)
-
-	jsonIn := <-ch
-
-	json.NewEncoder(w).Encode(jsonIn)
+	defer re.Body.Close()
 
 }
