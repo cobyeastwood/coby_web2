@@ -1,7 +1,6 @@
 package main
 
 import (
-	"log"
 	"net/http"
 	"os"
 	"time"
@@ -18,13 +17,9 @@ import (
 
 func main() {
 
-	func() {
-		err := g.Load()
+	err := g.Load()
 
-		if err != nil {
-			log.Fatal(err)
-		}
-	}()
+	controllers.HandleErr(err)
 
 	port := ":" + os.Getenv("PORT")
 	static := os.Getenv("STATIC")
@@ -45,14 +40,15 @@ func main() {
 	r.Use(middleware.StripSlashes)
 	r.Use(middleware.Timeout(60 * time.Second))
 
+	// r.HandleFunc()
+
 	// Add Routes
 	controllers.Routes(r)
 
 	// Serve Static Files
 	servers.FileServer(r, static)
 
+	// Serve All on Port
 	http.ListenAndServe(port, r)
-
-	// http.Serve(autocert.NewListener(":"+port), r)
 
 }

@@ -4,7 +4,6 @@ import (
 	crand "crypto/rand"
 	"encoding/binary"
 	"encoding/json"
-	"errors"
 	"fmt"
 	"io"
 	"log"
@@ -25,6 +24,13 @@ func Routes(r *chi.Mux) {
 	r.Get("/api/v1/typicode", getRoutes(typicodes))
 	r.Get("/api/v1/quote", getRoutes(quotes))
 
+}
+
+// HandleErr errors
+func HandleErr(err error) {
+	if err != nil {
+		log.Fatal(err)
+	}
 }
 
 func getRoutes(gofunc func(chan map[string]interface{}, chan error)) func(w http.ResponseWriter, r *http.Request) {
@@ -69,9 +75,9 @@ func (s cryptoSource) Int63() int64 {
 
 func (s cryptoSource) Uint64() (v uint64) {
 	err := binary.Read(crand.Reader, binary.BigEndian, &v)
-	if err != nil {
-		log.Fatal(err)
-	}
+
+	HandleErr(err)
+
 	return v
 }
 
@@ -115,8 +121,6 @@ func quotes(ch chan map[string]interface{}, er chan error) {
 	req.Header.Add("x-rapidapi-key", rapidKey)
 
 	re, err := http.DefaultClient.Do(req)
-
-	err = errors.New("Test")
 
 	if err != nil {
 		er <- err // Catch Errors
