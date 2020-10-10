@@ -4,6 +4,7 @@ import (
 	crand "crypto/rand"
 	"encoding/binary"
 	"encoding/json"
+	"errors"
 	"fmt"
 	"io"
 	"log"
@@ -21,34 +22,41 @@ var mu sync.Mutex
 // Routes Mux
 func Routes(r *chi.Mux) {
 
+	// go getRoutes()  // then display?
+
 	r.Get("/api/v1/typicode", getRoutes(typicodes))
 	r.Get("/api/v1/quote", getRoutes(quotes))
 
 }
 
-func getRoutes(gofunc func(chan map[string]interface{})) func(w http.ResponseWriter, r *http.Request) {
+func getRoutes(gofunc func(chan map[string]interface{}, chan error)) func(w http.ResponseWriter, r *http.Request) {
+
 	return func(w http.ResponseWriter, r *http.Request) {
 		w.Header().Set("Content-Type", "application/json")
 
 		ch := make(chan map[string]interface{})
+		er := make(chan error)
 
-		go gofunc(ch)
+		go gofunc(ch, er)
 
-		jsonOut := <-ch
-
-		json.NewEncoder(w).Encode(jsonOut)
+		select { // Look into further
+		case jsonOut := <-ch:
+			json.NewEncoder(w).Encode(jsonOut)
+		case err := <-er:
+			http.Error(w, "Bad request - Go away!", 400)
+			fmt.Println(err)
+		}
 
 	}
 }
 
-func goGorountine(ch chan map[string]interface{}, body io.ReadCloser) {
+func goGorountine(ch chan<- map[string]interface{}, body io.ReadCloser) {
 
 	mu.Lock()
+	defer mu.Unlock()
 
 	jsonIn := make(map[string]interface{})
 	json.NewDecoder(body).Decode(&jsonIn)
-
-	defer mu.Unlock()
 
 	ch <- jsonIn // Send it back
 
@@ -70,7 +78,7 @@ func (s cryptoSource) Uint64() (v uint64) {
 	return v
 }
 
-func typicodes(ch chan map[string]interface{}) {
+func typicodes(ch chan map[string]interface{}, er chan error) {
 
 	var src cryptoSource
 	rnd := rand.New(src)
@@ -81,8 +89,10 @@ func typicodes(ch chan map[string]interface{}) {
 
 	re, err := http.Get(typiURL + randInt)
 
+	err = errors.New("TestTypi")
+
 	if err != nil {
-		log.Fatal(err)
+		er <- err
 	}
 
 	goGorountine(ch, re.Body)
@@ -91,7 +101,7 @@ func typicodes(ch chan map[string]interface{}) {
 
 }
 
-func quotes(ch chan map[string]interface{}) {
+func quotes(ch chan map[string]interface{}, er chan error) {
 
 	rapidURL := os.Getenv("RAPID_URL")
 	rapidHost := os.Getenv("RAPID_HOST")
@@ -104,8 +114,10 @@ func quotes(ch chan map[string]interface{}) {
 
 	re, err := http.DefaultClient.Do(req)
 
+	// err = errors.New("Test")
+
 	if err != nil {
-		log.Fatal(err)
+		er <- err
 	}
 
 	goGorountine(ch, re.Body)
