@@ -27,10 +27,9 @@ func main() {
 	r := chi.NewRouter()
 
 	// Add Middlewares
-	r.Use(middleware.Logger)
 	r.Use(httprate.LimitByIP(50, 1*time.Minute))
 	r.Use(cors.Handler(cors.Options{
-		AllowedOrigins:   []string{"*"},
+		AllowedOrigins:   []string{"*cobyeastwood.com"},
 		AllowedMethods:   []string{"GET"},
 		AllowedHeaders:   []string{"Accept", "Authorization", "Content-Type"},
 		ExposedHeaders:   []string{"Link"},
@@ -39,8 +38,6 @@ func main() {
 	}))
 	r.Use(middleware.StripSlashes)
 	r.Use(middleware.Timeout(60 * time.Second))
-
-	// r.HandleFunc()
 
 	// Add Routes
 	controllers.Routes(r)
