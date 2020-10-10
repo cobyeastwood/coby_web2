@@ -22,8 +22,6 @@ var mu sync.Mutex
 // Routes Mux
 func Routes(r *chi.Mux) {
 
-	// go getRoutes()  // then display?
-
 	r.Get("/api/v1/typicode", getRoutes(typicodes))
 	r.Get("/api/v1/quote", getRoutes(quotes))
 
@@ -39,12 +37,11 @@ func getRoutes(gofunc func(chan map[string]interface{}, chan error)) func(w http
 
 		go gofunc(ch, er)
 
-		select { // Look into further
+		select {
 		case jsonOut := <-ch:
 			json.NewEncoder(w).Encode(jsonOut)
-		case err := <-er:
+		case <-er:
 			http.Error(w, "Bad request - Go away!", 400)
-			fmt.Println(err)
 		}
 
 	}
@@ -78,24 +75,29 @@ func (s cryptoSource) Uint64() (v uint64) {
 	return v
 }
 
-func typicodes(ch chan map[string]interface{}, er chan error) {
-
+func randCrypt(number int) string {
 	var src cryptoSource
+
 	rnd := rand.New(src)
 
-	randInt := fmt.Sprint(rnd.Intn(100))
+	randInt := fmt.Sprint(rnd.Intn(number))
+
+	return randInt
+}
+
+func typicodes(ch chan map[string]interface{}, er chan error) {
 
 	typiURL := os.Getenv("TYPI_URL")
 
+	randInt := randCrypt(100)
+
 	re, err := http.Get(typiURL + randInt)
 
-	err = errors.New("TestTypi")
-
 	if err != nil {
-		er <- err
+		er <- err // Catch Errors
+	} else {
+		goGorountine(ch, re.Body)
 	}
-
-	goGorountine(ch, re.Body)
 
 	defer re.Body.Close()
 
@@ -114,13 +116,13 @@ func quotes(ch chan map[string]interface{}, er chan error) {
 
 	re, err := http.DefaultClient.Do(req)
 
-	// err = errors.New("Test")
+	err = errors.New("Test")
 
 	if err != nil {
-		er <- err
+		er <- err // Catch Errors
+	} else {
+		goGorountine(ch, re.Body)
 	}
-
-	goGorountine(ch, re.Body)
 
 	defer re.Body.Close()
 
