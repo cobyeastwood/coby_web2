@@ -1,0 +1,13 @@
+{
+  "short_name": "Coby Web",
+  "name": "Coby Eastwood",
+  "icons": [
+    {
+      "src": "c_icon.svg"
+    }
+  ],
+  "start_url": ".",
+  "display": "standalone",
+  "theme_color": "#000000",
+  "background_color": "#ffffff"
+}

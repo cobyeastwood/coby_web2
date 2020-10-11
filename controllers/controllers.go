@@ -93,7 +93,7 @@ func randCrypt(number int) string {
 
 func typicodes(ch chan map[string]interface{}, er chan error) {
 
-	typiURL := os.Getenv("TYPI_URL")
+	typiURL := "https://jsonplaceholder.typicode.com/todos/"
 
 	randInt := randCrypt(100)
 
@@ -111,7 +111,7 @@ func typicodes(ch chan map[string]interface{}, er chan error) {
 
 func quotes(ch chan map[string]interface{}, er chan error) {
 
-	rapidURL := os.Getenv("RAPID_URL")
+	rapidURL := "https://rapidapi.p.rapidapi.com/quotes/random/"
 	rapidHost := os.Getenv("RAPID_HOST")
 	rapidKey := os.Getenv("RAPID_KEY")
 
