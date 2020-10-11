@@ -8,12 +8,14 @@ RUN go get -u github.com/go-chi/chi github.com/go-chi/chi/middleware github.com/
 RUN go mod vendor
 RUN go build -o main .
 
-CMD ["./main"]
+WORKDIR /client
 
-# cd client && \
-#   apt-get update -qq && \
-#   apt-get install -y yarn &&\
-#   yarn install && \
-#   yarn run build && \
+COPY package*.json ./
+COPY ./ ./
+
+RUN yarn install
+RUN yarn run build
+
+CMD cd .. ["./main"]
 
 EXPOSE 8080

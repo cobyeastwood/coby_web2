@@ -1,4 +1,4 @@
-version: '3.8'
+version: '3'
 services:
   web:
     build: .
@@ -9,9 +9,9 @@ services:
       - .env
     volumes:
       - .:/go/src/github.com/cobyeastwood/coby_web
-  client:
-    build: ./client
-    volumes:
-      - ./client:/client
-    # ports:
-    #   - '3000:3000'
+  # client:
+  #   build: ./client
+  #   volumes:
+  #     - ./client:/client
+  # ports:
+  #   - '3000:3000'
