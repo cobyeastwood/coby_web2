@@ -1,21 +1,47 @@
-FROM golang:latest
+FROM golang:latest AS builder
 
-WORKDIR /coby_web
+ADD . /app
+
+WORKDIR /app
+
+COPY go.* ./
+
+RUN go mod vendor
+RUN go mod download
 
 COPY . .
 
-RUN go get -u github.com/go-chi/chi github.com/go-chi/chi/middleware github.com/joho/godotenv
-RUN go mod vendor
-RUN go build -o main .
+RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -ldflags "-w" -a -o /main .
 
-WORKDIR /client
+######
+# Build Static Assets 
+######
 
-COPY package*.json ./
-COPY ./ ./
+FROM node:latest AS node_builder
 
-RUN yarn install
-RUN yarn run build
+WORKDIR /client/src
 
-CMD cd .. ["./main"]
+COPY --from=builder /app/client ./
+
+RUN npm install
+RUN npm run build
+
+######
+# Run Production
+######
+
+FROM alpine:latest
+
+RUN apk --no-cache add ca-certificates
+
+COPY --from=builder /main ./
+COPY --from=node_builder /client/src/build ./web
+
+RUN chmod +x ./main
 
 EXPOSE 8080
+
+ENV PORT "8080"
+ENV RAPID_KEY "75977ac2c3msh5902e2849fbb40bp169709jsn626a021033df"
+
+CMD ["./main"]

@@ -7,10 +7,10 @@ import (
 	"fmt"
 	"io"
 	"log"
+	"os"
 
 	rand "math/rand"
 	"net/http"
-	"os"
 	"sync"
 
 	"github.com/go-chi/chi"
@@ -112,9 +112,9 @@ func typicodes(ch chan map[string]interface{}, er chan error) {
 func quotes(ch chan map[string]interface{}, er chan error) {
 
 	rapidURL := "https://rapidapi.p.rapidapi.com/quotes/random/"
-	rapidHost := os.Getenv("RAPID_HOST")
-	rapidKey := os.Getenv("RAPID_KEY")
+	rapidHost := "quotes15.p.rapidapi.com"
 
+	rapidKey := os.Getenv("RAPID_KEY")
 	req, _ := http.NewRequest("GET", rapidURL, nil)
 
 	req.Header.Add("x-rapidapi-host", rapidHost)

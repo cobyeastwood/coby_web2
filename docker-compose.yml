@@ -1,17 +1,17 @@
 version: '3'
 services:
+  client:
+    build: ./client
+    volumes:
+      - ./client:/client
   web:
     build: .
+    volumes:
+      - .:/go/src/github.com/cobyeastwood/coby_web
     ports:
-      - '8080:80'
+      - '80:8080'
     restart: always
     env_file:
       - .env
-    volumes:
-      - .:/go/src/github.com/cobyeastwood/coby_web
-  # client:
-  #   build: ./client
-  #   volumes:
-  #     - ./client:/client
-  # ports:
-  #   - '3000:3000'
+    depends_on:
+      - web

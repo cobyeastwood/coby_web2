@@ -9,7 +9,6 @@ import (
 	"github.com/cobyeastwood/coby_web/servers"
 	"github.com/go-chi/cors"
 	"github.com/go-chi/httprate"
-	g "github.com/joho/godotenv"
 
 	"github.com/go-chi/chi"
 	"github.com/go-chi/chi/middleware"
@@ -17,12 +16,8 @@ import (
 
 func main() {
 
-	err := g.Load()
-
-	controllers.HandleErr(err)
-
 	port := ":" + os.Getenv("PORT")
-	static := os.Getenv("STATIC")
+	static := "./web"
 
 	r := chi.NewRouter()
 
