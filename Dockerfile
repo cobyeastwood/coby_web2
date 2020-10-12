@@ -27,24 +27,26 @@ RUN npm install
 RUN npm run build
 
 ######
-# Run Production
+# Run Apline Production Build
 ######
 
 FROM alpine:latest
 
 RUN apk update && apk add ca-certificates && rm -rf /var/cache/apk/*
 
-COPY ./cobyeastwood.com.chained.crt /usr/local/share/ca-certificates/cobyeastwood.com.chained.crt
-
-RUN chmod 644 /usr/local/share/ca-certificates/cobyeastwood.com.chained.crt
-
 COPY --from=builder /main ./
 COPY --from=node_builder /client/src/build ./web
 
 RUN chmod +x ./main
 
-EXPOSE 80
+#####
+# Run Nginx Reverse Proxy
+#####
 
-ENV PORT "80"
+FROM nginx:latest
+
+COPY nginx.conf /etc/nginx/nginx.conf
+
+EXPOSE 80
 
 CMD ["./main"]

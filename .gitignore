@@ -1,3 +1,7 @@
+# Nginx
+nginx.conf
+*.conf
+
 # Env
 .env
 *.env
