@@ -39,9 +39,9 @@ COPY --from=node_builder /client/src/build ./web
 
 RUN chmod +x ./main
 
-EXPOSE 8080
+EXPOSE 80
 
-ENV PORT "8080"
+ENV PORT "80"
 ENV RAPID_KEY "75977ac2c3msh5902e2849fbb40bp169709jsn626a021033df"
 
 CMD ["./main"]
