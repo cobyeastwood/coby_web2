@@ -1,0 +1,20 @@
+[
+  {
+    "userId": 104,
+    "id": 104,
+    "title": "delectus aut autem",
+    "completed": false
+  },
+  {
+    "content": "Do not wait; the time will never be \"just right.\" Start where you stand, and work with whatever tools you may have at your command, and better tools will be  found as you go along.",
+    "id": 7734,
+    "language_code": "en",
+    "originator": {
+      "id": 127416,
+      "name": "Napoleon Hill",
+      "url": "https://quotepark.com/authors/napoleon-hill/"
+    },
+    "tags": ["Waiting", "Time", "nota"],
+    "url": "https://quotepark.com/quotes/7734-napoleon-hill-do-not-wait-the-time-will-never-be-just-right/"
+  }
+]
