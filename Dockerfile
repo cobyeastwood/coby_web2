@@ -34,9 +34,9 @@ FROM alpine:latest
 
 RUN apk update && apk add ca-certificates && rm -rf /var/cache/apk/*
 
-COPY ./cobyeastwood.com.chained.crt /usr/share/ca-certificates/cobyeastwood.com.chained.crt
+COPY ./cobyeastwood.com.chained.crt /usr/local/share/ca-certificates/cobyeastwood.com.chained.crt
 
-RUN sudo update-ca-certificates
+RUN chmod 644 /usr/local/share/ca-certificates/cobyeastwood.com.chained.crt
 
 COPY --from=builder /main ./
 COPY --from=node_builder /client/src/build ./web
