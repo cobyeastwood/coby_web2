@@ -1,7 +1,6 @@
 package main
 
 import (
-	"log"
 	"net/http"
 	"os"
 	"time"
@@ -15,21 +14,7 @@ import (
 	"github.com/go-chi/chi/middleware"
 )
 
-func redirect(w http.ResponseWriter, req *http.Request) {
-	// remove/add not default ports from req.Host
-	target := "https://" + req.Host + req.URL.Path
-	if len(req.URL.RawQuery) > 0 {
-		target += "?" + req.URL.RawQuery
-	}
-	log.Printf("redirect to: %s", target)
-	http.Redirect(w, req, target,
-		// see comments below and consider the codes 308, 302, or 301
-		http.StatusTemporaryRedirect)
-}
-
 func main() {
-
-	go http.ListenAndServe(":80", http.HandlerFunc(redirect))
 
 	port := ":" + os.Getenv("PORT")
 	static := "./web"
@@ -56,6 +41,6 @@ func main() {
 	servers.FileServer(r, static)
 
 	// Serve All on Port
-	http.ListenAndServeTLS(port, "key.pem", "cobyeastwood.com.chained.crt", r)
+	http.ListenAndServe(port, r)
 
 }
