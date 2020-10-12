@@ -32,7 +32,11 @@ RUN npm run build
 
 FROM alpine:latest
 
-RUN apk --no-cache add ca-certificates
+RUN apk update && apk add ca-certificates && rm -rf /var/cache/apk/*
+
+COPY ./cobyeastwood.com.chained.crt /usr/local/share/ca-certificates/cobyeastwood.com.chained.crt
+
+RUN update-ca-certificates
 
 COPY --from=builder /main ./
 COPY --from=node_builder /client/src/build ./web
@@ -42,6 +46,5 @@ RUN chmod +x ./main
 EXPOSE 80
 
 ENV PORT "80"
-ENV RAPID_KEY "75977ac2c3msh5902e2849fbb40bp169709jsn626a021033df"
 
 CMD ["./main"]
