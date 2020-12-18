@@ -6,93 +6,91 @@ import { v4 as uuidv4 } from 'uuid';
 import { connect } from 'react-redux';
 import { Head, Section } from '../styles/component.styles';
 import { change, events } from '../utility/analytics';
+
+import { onFetch } from '../actions/actions';
 import { ON_CLICKS } from '../actions/actionTypes';
 
-import * as backup from '../json/data.json';
 import * as helm from '../json/content.json';
-
-const axios = require('axios').default;
 
 export const P2 = styled.p`
   margin: 2rem;
   text-align: left;
 `;
 
-const Home = ({ clicks }) => {
-  const [typi, setTypi] = useState([backup[0]]);
+const Home = ({ typicode, clicks, onFetch }) => {
   const [bool, setBool] = useState(false);
 
   useEffect(() => {
     if (window) {
       change(window);
     }
-
-    async function axiosGet() {
-      try {
-        const { status, data } = await axios.get('/api/v1/typicode');
-        if (status === 200 && data && data.id) {
-          setTypi([data]);
-        }
-      } catch (err) {}
-    }
-    axiosGet();
   }, []);
+
+  const send = e => {
+    e.preventDefault();
+
+    !bool ? setBool(true) : setBool(false);
+
+    events(e);
+    clicks(e);
+  };
 
   return (
     <React.Fragment>
       <Helmet>
-        <meta charSet="utf-8" />
+        <meta charSet='utf-8' />
         <title>Coby Eastwood: Home</title>
-        <meta name="description" content={helm.content} />
-        <link rel="canonical" href="http://cobyeastwood.com/"></link>
+        <meta name='description' content={helm.content} />
+        <link rel='canonical' href='https://cobyeastwood.com/'></link>
       </Helmet>
-      <Head>Welcome to my home page</Head>
+      <Head>Welcome to my home</Head>
       <Section>
         <h1>Home</h1>
         <br />
-        <p className="text-break">
-          Let's talk about coding! Love RESTful APIs? Check out below to see
-          them at work. Site is made using a Golang backend, with a TypeScript,
-          and JavaScript frontend.
+        <p className='text-break'>
+          Let's talk about coding! Click the button below to see REST API's at
+          work. Site is made using Golang (Go), with a TypeScript and JavaScript
+          frontend.
         </p>
         <br />
         <button
-          type="button"
-          className="btn btn-light"
-          onClick={(e) => {
-            !bool ? setBool(true) : setBool(false);
-            events(e);
-            clicks(e);
+          type='button'
+          className='btn btn-light'
+          onClick={e => {
+            onFetch();
+            send(e);
           }}
         >
           Test Backend
         </button>
         <span>
           {bool
-            ? typi.map((t) => (
+            ? [typicode].map(({ userId, id, title, completed }) => (
                 <P2>
-                  userId: {t.userId}
+                  userId: {userId}
                   <br />
-                  title: {t.title}
+                  title: {title}
                   <br />
-                  id: {t.id}
+                  id: {id}
                   <br />
-                  completed: {t.completed === true ? 'true' : 'false'}
-                  {t.id !== 104 ? (
+                  completed: {completed ? 'true' : 'false'}
+                  {id !== 125 ? (
                     <React.Fragment>
                       <br />
                       <br />
                       Still curious? Checkout the{' '}
-                      <a href="/api/v1/typicode">route</a>.
+                      <a href='/api/v1/typicode'>route</a>.
                     </React.Fragment>
-                  ) : null}
+                  ) : (
+                    ''
+                  )}
                 </P2>
               ))
-            : null}
+            : ''}
         </span>
         <br />
-        <button type="button" className="btn btn-link">
-          <a href="https://github.com/cobyeast/coby_web">Source code</a>
+        <button type='button' className='btn btn-link'>
+          <a href='https://github.com/cobyeast/coby_web'>Source code</a>
         </button>
       </Section>
       <Section>
@@ -103,12 +101,17 @@ const Home = ({ clicks }) => {
         </h5>
         <h6>April 2020 - Present // Software Developer</h6>
         <p>
-          As a Software Developer, I create iteractive web components for
-          realestate listing platforms including{' '}
-          <a href="https://gobii.com/">Gobii</a>, and others. In this position,
-          I use version control – Git/GitHub, and work with React, Node,
-          MongoDB, and Postgres. In this position, I have also completed Dev Ops
-          tasks using packages like Asyncio, and Aiohttp in Python.
+          As a Software Developer, I create iteractive web components on both
+          front and backend for Stratus Data Systems where I work on real estate
+          listing platforms including <a href='https://gobii.com/'>Gobii</a>,{' '}
+          <a href='https://trreb.ca/'>Trebb</a> and others. I also completed two
+          team projects including creating custom integrations for client side
+          analytics tracking, and Dev Ops scripts for task automatation using
+          packages like Asyncio, and Aiohttp in Python.
+        </p>
+        <p>
+          In this position, I use version control – Git/GitHub, and work with
+          tools like React, Node, MongoDB, and PostgreSQL.
         </p>
       </Section>
       <Section>
@@ -117,16 +120,16 @@ const Home = ({ clicks }) => {
         </h5>
         <h6>June 2019 - January 2020 // Marketing Operations Manager</h6>
         <p>
-          As a Marketing Operations Manager, I lead and enabled a team of three
-          sales associates, crafted business development campaigns, managed our
-          sales pipeline using Pipedrive, conducted competitive analysis,
-          tracked key performance indicators, and promoted our services through
-          direct marketing channels.
+          In this position, I lead and enabled a team of three sales associates,
+          crafted business development campaigns, managed our sales pipeline
+          using Pipedrive, conducted competitive analysis, tracked key
+          performance indicators, and promoted our services through direct
+          marketing channels.
         </p>
         <p>
-          In this position, I worked with tools such as Google Analytics, Google
-          Search Console, Yesware, CRMs, and refined my skills in SEO, HTML5,
-          CSS3, and email marketing.
+          I often worked with tools such as Google Analytics, Google Search
+          Console, Yesware, CRMs, and refined my skills in SEO, HTML5, CSS3, and
+          email marketing.
         </p>
       </Section>
       <Section>
@@ -163,15 +166,20 @@ const Home = ({ clicks }) => {
   );
 };
 
-const clicks = (e) => ({
+const clicks = e => ({
   type: ON_CLICKS,
-  payload: { _id: uuidv4(), element: e.type },
+  payload: { _id: uuidv4(), element: e.type }
 });
 
-const mapDispatchToProps = (dipatch) => {
+const mapDispatchToProps = dipatch => {
   return {
-    clicks: (e) => dipatch(clicks(e)),
+    clicks: e => dipatch(clicks(e)),
+    onFetch: onFetch
   };
 };
 
-export default connect(null, mapDispatchToProps)(Home);
+const mapStateToProps = state => ({
+  typicode: state.typicode
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Home);

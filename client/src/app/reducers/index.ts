@@ -1,11 +1,8 @@
 import * as ActionTypes from '../actions/actionTypes';
 
-const initialState = {
-  _id: null,
-  element: '',
-};
+const initialState = {};
 
-export default function (state = initialState, action: any) {
+export default function (state: any, action: any) {
   const { type, payload } = action;
 
   switch (type) {
@@ -20,6 +17,19 @@ export default function (state = initialState, action: any) {
         ...state,
         ...payload,
       };
+    }
+    case ActionTypes.ON_FETCH: {
+      console.log(payload)
+      const {userId, id, title, completed} = payload;
+      return {
+        ...state,
+        typicode: {
+          userId,
+          id,
+          title,
+          completed
+        }
+      }
     }
     default:
       return state;

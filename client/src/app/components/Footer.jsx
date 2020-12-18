@@ -37,70 +37,70 @@ const Footer = () => {
 
   return (
     <React.Fragment>
-      <Span className="mx-auto">
+      <Span className='mx-auto'>
         <div
-          className="text-justify btn-group btn-group-toggle"
-          data-toggle="buttons"
+          className='text-justify btn-group btn-group-toggle'
+          data-toggle='buttons'
         >
           <label
             className={`btn btn-secondary ${
               active === 'LinkedIn' ? 'active' : null
             }`}
-            onClick={(e) => {
+            onClick={e => {
               setActive('LinkedIn');
               events(e);
             }}
           >
             <A
-              className="text-reset text-decoration-none"
-              href="https://www.linkedin.com/in/coby-eastwood-196b12152/"
+              className='text-reset text-decoration-none'
+              href='https://www.linkedin.com/in/coby-eastwood-196b12152/'
             >
-              <i className="fab fa-linkedin-in" />
+              <i className='fab fa-linkedin-in' />
             </A>
           </label>
           <label
             className={`btn btn-secondary ${
               active === 'Github' ? 'active' : null
             }`}
-            onClick={(e) => {
+            onClick={e => {
               setActive('Github');
               events(e);
             }}
           >
             <A
-              className="text-reset text-decoration-none"
-              href="https://github.com/cobyeast"
+              className='text-reset text-decoration-none'
+              href='https://github.com/cobyeastwood'
             >
-              <i className="fab fa-github" />
+              <i className='fab fa-github' />
             </A>
           </label>
           <label
             className={`btn btn-secondary ${
               active === 'Twitter' ? 'active' : null
             }`}
-            onClick={(e) => {
+            onClick={e => {
               setActive('Twitter');
               events(e);
             }}
           >
             <A
-              className="text-reset text-decoration-none"
-              href="https://twitter.com/cobyeastwood"
+              className='text-reset text-decoration-none'
+              href='https://twitter.com/cobyeastwood'
             >
-              <i className="fab fa-twitter" />
+              <i className='fab fa-twitter' />
             </A>
           </label>
         </div>
       </Span>
-      <Div className="card">
-        <div className="card-header">Quote</div>
-        <div className="card-body">
-          <blockquote className="blockquote mb-0">
+      <Div className='card'>
+        <div className='card-header'>Quote</div>
+        <div className='card-body'>
+          <blockquote className='blockquote mb-0'>
             {quote
               ? quote.map((q, i) => (
                   <React.Fragment key={i++}>
                     <P key={i++}>{q.content || ''}</P>
-                    <footer key={i++} className="blockquote-footer">
+                    <footer key={i++} className='blockquote-footer'>
                       <cite
                         key={i++}
                         title={q.originator.name ? q.originator.name : ''}

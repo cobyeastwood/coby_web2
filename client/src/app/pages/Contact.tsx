@@ -18,17 +18,15 @@ class Contact extends React.Component<{ data: { message: string } }, {}> {
           <meta charSet="utf-8" />
           <title>Coby Eastwood: Contact</title>
           <meta name="description" content={helm.content} />
-          <link rel="canonical" href="http://cobyeastwood.com/contact"></link>
+          <link rel="canonical" href="https://cobyeastwood.com/contact"></link>
         </Helmet>
-        <Head>Welcome to my contact page</Head>
+        <Head>Welcome to my contact</Head>
         <Section>
           <h1>Contact</h1>
           <br />
           <p>
-            Thanks for stopping by! Think my website was cool? Explore some of
-            my other projects on GitHub — <strong>cobyeast</strong>. Not cool or
-            need something? Feel free to contact me at{' '}
-            <strong>cobyeastwood-&#64;-gmail.com</strong>.
+            Thank you for stopping by! If you have time, feel free to explore some of my GitHub projects. Got something to share? Contact me via email {'  '} —
+            <strong>cobyeastwood&#64;gmail.com</strong>.
           </p>
         </Section>
       </React.Fragment>

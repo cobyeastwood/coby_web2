@@ -3,5 +3,6 @@ export default interface Action {
   payload: {
     _id?: number;
     element?: object;
+    typicode?: object;
   };
 }
