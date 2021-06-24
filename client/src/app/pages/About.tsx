@@ -20,7 +20,7 @@ const About = () => {
 				<meta name='description' content={helm.content} />
 				<link rel='canonical' href='https://cobyeastwood.com/about'></link>
 			</Helmet>
-			<Head>Welcome to my about page</Head>
+			<Head />
 			<Section>
 				<h1>About</h1>
 				<br />

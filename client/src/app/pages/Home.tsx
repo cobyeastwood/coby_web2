@@ -53,7 +53,7 @@ const Home = (props: { clicks: (e: Events) => ClicksAction }) => {
 				<meta name='description' content={helm.content} />
 				<link rel='canonical' href='https://cobyeastwood.com/' />
 			</Helmet>
-			<Head>Welcome to my home page</Head>
+			<Head>Welcome to My Website</Head>
 			<Section>
 				<h1>Home</h1>
 				<br />

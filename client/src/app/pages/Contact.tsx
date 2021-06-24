@@ -20,7 +20,7 @@ class Contact extends React.Component<{ data: { message: string } }, {}> {
 					<meta name='description' content={helm.content} />
 					<link rel='canonical' href='https://cobyeastwood.com/contact'></link>
 				</Helmet>
-				<Head>Welcome to my contact page</Head>
+				<Head />
 				<Section>
 					<h1>Contact</h1>
 					<br />
