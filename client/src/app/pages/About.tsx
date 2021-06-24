@@ -33,7 +33,7 @@ const About = (props: any) => {
           Marketing Operations Manager at Crosspoint Evaluations. During this
           time, I gained hands-on experience with over eleven different
           high-growth technology startups. Now, I work as a remote Software
-          Developer at <a href="https://gobii.com/">Gobii</a>.
+          Developer at <a href="https://stratusdata.com/">Stratus</a>.
         </p>
       </Section>
       <Section>

@@ -25,8 +25,8 @@ class Contact extends React.Component<{ data: { message: string } }, {}> {
           <h1>Contact</h1>
           <br />
           <p>
-            Thanks for stopping by! Think my website was cool? Explore some of
-            my other projects on GitHub — <strong>cobyeast</strong>. Not cool or
+            Thanks for stopping by! Have some extra time, explore some of
+            my other projects on GitHub — <strong>cobyeastwood</strong>. Not cool or
             need something? Feel free to contact me at{' '}
             <strong>cobyeastwood-&#64;-gmail.com</strong>.
           </p>

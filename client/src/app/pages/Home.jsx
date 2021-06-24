@@ -51,9 +51,7 @@ const Home = ({ clicks }) => {
         <h1>Home</h1>
         <br />
         <p className="text-break">
-          Let's talk about coding! Love RESTful APIs? Check out below to see
-          them at work. Site is made using a Golang backend, with a TypeScript,
-          and JavaScript frontend.
+          Let's test to see how an async fetch is handled in React. 
         </p>
         <br />
         <button
@@ -92,22 +90,22 @@ const Home = ({ clicks }) => {
         </span>
         <br />
         <button type="button" className="btn btn-link">
-          <a href="https://github.com/cobyeast/coby_web">Source code</a>
+          <a href="https://github.com/cobyeastwood/coby_web2">Source code</a>
         </button>
       </Section>
       <Section>
         <h1>Work Experience</h1>
         <br />
         <h5>
-          <strong>Gobii</strong>
+          <strong>Stratus Data Systems</strong>
         </h5>
         <h6>April 2020 - Present // Software Developer</h6>
         <p>
           As a Software Developer, I create iteractive web components for
           realestate listing platforms including{' '}
           <a href="https://gobii.com/">Gobii</a>, and others. In this position,
-          I use version control – Git/GitHub, and work with React, Node,
-          MongoDB, and Postgres. In this position, I have also completed Dev Ops
+          I use version control – Git/GitHub, and work with React, Node, and
+          MongoDB. In this position, I have also completed Dev Ops
           tasks using packages like Asyncio, and Aiohttp in Python.
         </p>
       </Section>
