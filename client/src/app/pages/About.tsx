@@ -43,8 +43,8 @@ const About = () => {
 				<p>
 					In my free time, I will either be running, reading psychology books or
 					hanging at a coffee shop. I am personally interested in running,
-					coding, reading, cryptocurrencies, stocks, fashion, marketing, border
-					collies, and good-mood food.
+					coding, reading, cryptocurrencies, stocks, fashion, border collies,
+					and good food.
 				</p>
 			</Section>
 		</React.Fragment>
