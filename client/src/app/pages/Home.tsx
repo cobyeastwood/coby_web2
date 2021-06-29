@@ -4,7 +4,7 @@ import { Helmet } from 'react-helmet'
 
 import { v4 as uuidv4 } from 'uuid'
 import { connect } from 'react-redux'
-import { Head, Section } from '../styles/component.styles'
+import { Spacer, Section } from '../styles/component.styles'
 import { change, events } from '../utility/analytics'
 import { ON_CLICKS } from '../actions/actionTypes'
 
@@ -53,24 +53,26 @@ const Home = (props: { clicks: (e: Events) => ClicksAction }) => {
 				<meta name='description' content={helm.content} />
 				<link rel='canonical' href='https://cobyeastwood.com/' />
 			</Helmet>
-			<Head>Welcome to My Website</Head>
+			<Spacer />
 			<Section>
 				<h1>Home</h1>
 				<br />
 				<p className='text-break'>
-					Let's test to see how an asynchronous fetch is handled in React.
+					Use the "Test Button" to see how an asynchronous fetch is handled in
+					React with useEffect hooks.
 				</p>
 				<br />
 				<button
 					type='button'
 					className='btn btn-light'
+					style={{ color: '#555555', borderColor: '#C4C4C4' }}
 					onClick={(e) => {
 						!bool ? setBool(true) : setBool(false)
 						events(e)
 						clicks(e)
 					}}
 				>
-					Test Backend
+					Test Button
 				</button>
 				<span>
 					{bool
@@ -106,14 +108,14 @@ const Home = (props: { clicks: (e: Events) => ClicksAction }) => {
 				<h5>
 					<strong>Stratus Data Systems</strong>
 				</h5>
-				<h6>April 2020 - Present // Software Developer</h6>
+				<h6>January 2020 - Present // Software Developer</h6>
 				<p>
-					As a Software Developer, I create iteractive web components for
-					realestate listing platforms including{' '}
+					As a Software Developer, I create scalable web components and backend
+					features for real estate platforms running on Stratus MLS including
 					<a href='https://gobii.com/'>Gobii</a>, and others. In this position,
-					I use version control – Git/GitHub, and work with React, Node, and
-					MongoDB. In this position, I have also completed Dev Ops tasks using
-					packages like Asyncio, and Aiohttp in Python.
+					work with React, Redux, Node, and MongoDB. In this position, I
+					sometimes work on DevOps tasks and ETL tools using nifty Python
+					packages like Asyncio, and Aiohttp.
 				</p>
 			</Section>
 			<Section>
@@ -122,16 +124,16 @@ const Home = (props: { clicks: (e: Events) => ClicksAction }) => {
 				</h5>
 				<h6>June 2019 - January 2020 // Marketing Operations Manager</h6>
 				<p>
-					As a Marketing Operations Manager, I lead and enabled a team of three
-					sales associates, crafted business development campaigns, managed our
-					sales pipeline using Pipedrive, conducted competitive analysis,
-					tracked key performance indicators, and promoted our services through
-					direct marketing channels.
+					As a Marketing Operations Manager, I led and enabled a team of three
+					sales associates, managed our sales pipeline using CRM, communicated
+					directly with our clients, and promoted our services through direct
+					marketing channels leading to 36% revenue growth.
 				</p>
 				<p>
 					In this position, I worked with tools such as Google Analytics, Google
-					Search Console, Yesware, CRMs, and refined my skills in SEO, HTML5,
-					CSS3, and email marketing.
+					Search Console, MailChimp, and CRMs. I also developed introductory
+					programming skills while improving SEO and working with our Wordpress
+					site in HTML5 and CSS3.
 				</p>
 			</Section>
 			<Section>
@@ -142,14 +144,13 @@ const Home = (props: { clicks: (e: Events) => ClicksAction }) => {
 				<p>
 					As an Associate, I worked closely with my account managers, CEOs, and
 					marketing teams of venture-backed technology startups to research,
-					brainstorm, strategize, and construct communication campaigns.
+					brainstorm, strategize and construct communication campaigns.
 				</p>
 				<p>
-					I learned how to write blogs, pitches, and press releases. I also
-					learned how to conduct keyword analysis, research media trends, and
-					craft communication campaigns, executive profiles, and proposals of
-					work. During this time, I refined my skills in Excel, copywriting, and
-					email marketing.
+					On the job, I conducted keyword analysis, researched media trends, and
+					crafted communication campaigns. I also was responsible for making
+					executive profiles, and proposals of work. While working at Table, I
+					refined my skills in copywriting and email marketing.
 				</p>
 			</Section>
 			<Section>
@@ -158,10 +159,10 @@ const Home = (props: { clicks: (e: Events) => ClicksAction }) => {
 				</h5>
 				<h6>Septemper 2017 - January 2018 // Growth Marketing Intern</h6>
 				<p>
-					As a Growth Marketing Intern, I worked closely with Pantry Fuel's CEO
-					to improve sales and retention rates. In my role, I attended local
-					marketing events, met with small businesses to promote our services,
-					crafted blogs, and ran all social media accounts.
+					As a Growth Marketing Intern, I worked closely with the Pantry Fuel
+					founder to improve sales and retention rates. In my role, I attended
+					local marketing events, met with small businesses to promote our
+					services, crafted blogs and ran our social media accounts.
 				</p>
 			</Section>
 		</React.Fragment>

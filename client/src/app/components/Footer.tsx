@@ -61,13 +61,15 @@ const Footer = () => {
 		<React.Fragment>
 			<Span className='mx-auto'>
 				<div
-					className='text-justify btn-group btn-group-toggle'
+					className='text-justify btn-group btn-group-toggle b-0'
 					data-toggle='buttons'
+					style={{ color: '#555555', borderColor: '#19BC9B' }}
 				>
 					<label
-						className={`btn btn-secondary ${
+						className={`btn btn-light ${
 							active === 'LinkedIn' ? 'active' : null
 						}`}
+						style={{ color: '#555555', borderColor: '#C4C4C4' }}
 						onClick={(e) => {
 							setActive('LinkedIn')
 							events(e)
@@ -81,9 +83,8 @@ const Footer = () => {
 						</A>
 					</label>
 					<label
-						className={`btn btn-secondary ${
-							active === 'Github' ? 'active' : null
-						}`}
+						className={`btn btn-light ${active === 'Github' ? 'active' : null}`}
+						style={{ color: '#555555', borderColor: '#C4C4C4' }}
 						onClick={(e) => {
 							setActive('Github')
 							events(e)
@@ -91,15 +92,16 @@ const Footer = () => {
 					>
 						<A
 							className='text-reset text-decoration-none'
-							href='https://github.com/cobyeast'
+							href='https://github.com/cobyeastwood'
 						>
 							<i className='fab fa-github' />
 						</A>
 					</label>
 					<label
-						className={`btn btn-secondary ${
+						className={`btn btn-light ${
 							active === 'Twitter' ? 'active' : null
 						}`}
+						style={{ color: '#555555', borderColor: '#C4C4C4' }}
 						onClick={(e) => {
 							setActive('Twitter')
 							events(e)
@@ -114,8 +116,18 @@ const Footer = () => {
 					</label>
 				</div>
 			</Span>
-			<Div className='card'>
-				<div className='card-header'>Quote</div>
+			<Div className='card' style={{ borderColor: '#C4C4C4' }}>
+				<div
+					className='card-header'
+					style={{
+						color: 'white',
+						background: '#19BC9B',
+						opacity: 0.55,
+						borderColor: '#C4C4C4'
+					}}
+				>
+					A Quote I Like
+				</div>
 				<div className='card-body'>
 					<blockquote className='blockquote mb-0'>
 						{quote

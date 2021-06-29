@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import { Helmet } from 'react-helmet'
 
-import { Head, Section } from '../styles/component.styles'
+import { Spacer, Section } from '../styles/component.styles'
 import { change } from '../utility/analytics'
 
 import * as helm from '../json/content.json'
@@ -20,7 +20,7 @@ const About = () => {
 				<meta name='description' content={helm.content} />
 				<link rel='canonical' href='https://cobyeastwood.com/about'></link>
 			</Helmet>
-			<Head />
+			<Spacer />
 			<Section>
 				<h1>About</h1>
 				<br />
@@ -28,12 +28,10 @@ const About = () => {
 					<strong>My Journey</strong>
 				</h5>
 				<p>
-					I began in San Francisco, California working in Communications and
-					Marketing, first as an associate at Table Public Relations and after a
-					Marketing Operations Manager at Crosspoint Evaluations. During this
-					time, I gained hands-on experience with over eleven different
-					high-growth technology startups. Now, I work as a remote Software
-					Developer at <a href='https://stratusdata.com/'>Stratus</a>.
+					I began in San Francisco, California working with Technology startups
+					in Communications and Marketing. Now, I build on the web and work as a
+					remote Software Developer at{' '}
+					<a href='https://stratusdata.com/'>Stratus</a>.
 				</p>
 			</Section>
 			<Section>
@@ -43,8 +41,8 @@ const About = () => {
 				<p>
 					In my free time, I will either be running, reading psychology books or
 					hanging at a coffee shop. I am personally interested in running,
-					coding, reading, cryptocurrencies, stocks, fashion, border collies,
-					and good food.
+					programming, reading, cryptocurrencies, stocks, border collies, and
+					thai food.
 				</p>
 			</Section>
 		</React.Fragment>
