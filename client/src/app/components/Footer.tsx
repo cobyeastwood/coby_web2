@@ -57,6 +57,23 @@ const Footer = () => {
 		axiosGet()
 	}, [])
 
+	const onClickMove = (href: string) => (e: any) => {
+		events(e)
+		window.location.assign(href)
+
+		if (href.includes('twitter')) {
+			setActive('twitter')
+		}
+
+		if (href.includes('github')) {
+			setActive('github')
+		}
+
+		if (href.includes('linkedin')) {
+			setActive('linkedin')
+		}
+	}
+
 	return (
 		<React.Fragment>
 			<Span className='mx-auto'>
@@ -67,73 +84,45 @@ const Footer = () => {
 				>
 					<label
 						className={`btn btn-light ${
-							active === 'LinkedIn' ? 'active' : null
+							active === 'linkedin' ? 'active' : null
 						}`}
-						style={{ color: '#555555', borderColor: '#C4C4C4' }}
-						onClick={(e) => {
-							setActive('LinkedIn')
-							events(e)
-						}}
+						style={{ color: '#555555', borderColor: 'white' }}
+						onClick={onClickMove(
+							'https://www.linkedin.com/in/coby-eastwood-196b12152/'
+						)}
 					>
-						<A
-							className='text-reset text-decoration-none'
-							href='https://www.linkedin.com/in/coby-eastwood-196b12152/'
-						>
-							<i className='fab fa-linkedin-in' />
-						</A>
+						<i className='fab fa-linkedin-in' />
 					</label>
 					<label
-						className={`btn btn-light ${active === 'Github' ? 'active' : null}`}
-						style={{ color: '#555555', borderColor: '#C4C4C4' }}
-						onClick={(e) => {
-							setActive('Github')
-							events(e)
-						}}
+						className={`btn btn-light ${active === 'github' ? 'active' : null}`}
+						style={{ color: '#555555', borderColor: 'white' }}
+						onClick={onClickMove('https://github.com/cobyeastwood')}
 					>
-						<A
-							className='text-reset text-decoration-none'
-							href='https://github.com/cobyeastwood'
-						>
-							<i className='fab fa-github' />
-						</A>
+						<i className='fab fa-github' />
 					</label>
 					<label
 						className={`btn btn-light ${
-							active === 'Twitter' ? 'active' : null
+							active === 'twitter' ? 'active' : null
 						}`}
-						style={{ color: '#555555', borderColor: '#C4C4C4' }}
-						onClick={(e) => {
-							setActive('Twitter')
-							events(e)
-						}}
+						style={{ color: '#555555', borderColor: 'white' }}
+						onClick={onClickMove('https://twitter.com/cobyeastwood')}
 					>
-						<A
-							className='text-reset text-decoration-none'
-							href='https://twitter.com/cobyeastwood'
-						>
-							<i className='fab fa-twitter' />
-						</A>
+						<i className='fab fa-twitter' />
 					</label>
 				</div>
 			</Span>
-			<Div className='card' style={{ borderColor: '#C4C4C4' }}>
-				<div
-					className='card-header'
-					style={{
-						color: 'white',
-						background: '#43C8AE',
-						borderColor: '#C4C4C4'
-					}}
-				>
-					A Quote I Like
+			<Div className='card'>
+				<div className='card-header' style={{ color: '#555555' }}>
+					Quote I Like
 				</div>
 				<div className='card-body'>
 					<blockquote className='blockquote mb-0'>
 						{quote
 							? quote.map((q: any, i: number) => (
 									<React.Fragment key={i++}>
-										<P key={i++}>{q.content || ''}</P>
-										<br />
+										<P style={{ color: '#555555' }} key={i++}>
+											<em>{q.content || ''}</em>
+										</P>
 										<footer key={i++} className='blockquote-footer'>
 											<cite key={i++}>
 												{q.originator.name ? q.originator.name : ''}

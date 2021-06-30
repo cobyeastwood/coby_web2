@@ -7,7 +7,7 @@ import Footer from './app/components/Footer'
 
 import Home from './app/pages/Home'
 import About from './app/pages/About'
-import Contact from './app/pages/Contact'
+import Posts from './app/pages/Posts'
 import NotFound from './app/pages/NotFound'
 
 const MainView = () => {
@@ -15,7 +15,8 @@ const MainView = () => {
 		home: true,
 		work: true,
 		contact: true,
-		about: true
+		about: true,
+		posts: true
 	})
 
 	const MouseOver = (e: any) => {
@@ -68,9 +69,9 @@ const MainView = () => {
 					/>
 					<Route
 						exact
-						path='/contact'
+						path='/posts'
 						render={(props) => (
-							<Contact
+							<Posts
 								{...props}
 								add={add}
 								MouseOut={MouseOut}

@@ -31,8 +31,7 @@ const About = (props: {
 				<link rel='canonical' href='https://cobyeastwood.com/about'></link>
 			</Helmet>
 			<Spacer />
-
-			<Section style={{ marginBottom: '0rem' }}>
+			<Section>
 				<HStack>
 					<i
 						className={`far fa-${add.about ? 'minus' : 'plus'}-square mb-4`}
@@ -40,18 +39,16 @@ const About = (props: {
 							cursor: 'pointer',
 							margin: 0,
 							marginLeft: '-2.5rem',
-							marginTop: '1.5rem'
+							marginTop: '1.75rem'
 						}}
 						onMouseOver={MouseOver}
 						onMouseOut={MouseOut}
 						onClick={() => onClickAdd('about')}
 					/>
-					<h1 style={{ marginLeft: '1.5rem' }}>About</h1>
+					<h2 style={{ marginLeft: '1.5rem' }}>About</h2>
 				</HStack>
-			</Section>
-			{add.about ? (
-				<React.Fragment>
-					<Section style={{ marginTop: '0.5rem' }}>
+				{add.about ? (
+					<React.Fragment>
 						<br />
 						<h5>
 							<strong>My Journey</strong>
@@ -62,8 +59,7 @@ const About = (props: {
 							and work as a remote Software Developer at{' '}
 							<a href='https://stratusdata.com/'>Stratus</a>.
 						</p>
-					</Section>
-					<Section>
+						<Section />
 						<h5>
 							<strong>Myself</strong>
 						</h5>
@@ -73,11 +69,41 @@ const About = (props: {
 							running, programming, reading, cryptocurrencies, stocks, border
 							collies, and thai food.
 						</p>
-					</Section>
-				</React.Fragment>
-			) : (
-				''
-			)}
+					</React.Fragment>
+				) : (
+					''
+				)}
+			</Section>
+			<Section>
+				<HStack>
+					<i
+						className={`far fa-${add.contact ? 'minus' : 'plus'}-square mb-4`}
+						style={{
+							cursor: 'pointer',
+							margin: 0,
+							marginLeft: '-2.5rem',
+							marginTop: '1.75rem'
+						}}
+						onMouseOver={MouseOver}
+						onMouseOut={MouseOut}
+						onClick={() => onClickAdd('contact')}
+					/>
+					<h2 style={{ marginLeft: '1.5rem' }}>Contact</h2>
+				</HStack>
+				{add.contact ? (
+					<React.Fragment>
+						<br />
+						<p>
+							Thank you for stopping by! If you have some time, you can checkout
+							some of my projects on GitHub — <strong>cobyeastwood</strong>. If
+							you are trying to get a hold of me, feel free to shoot an email to{' '}
+							<strong>cobyeastwood&#64;gmail.com</strong>.
+						</p>
+					</React.Fragment>
+				) : (
+					''
+				)}
+			</Section>
 		</React.Fragment>
 	)
 }

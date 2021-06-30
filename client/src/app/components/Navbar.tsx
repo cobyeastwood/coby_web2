@@ -4,13 +4,13 @@ import { Link } from 'react-router-dom'
 interface State {
 	home: boolean
 	about: boolean
-	contact: boolean
+	posts: boolean
 }
 
 const initialState = {
 	home: false,
 	about: false,
-	contact: false
+	posts: false
 }
 
 const Navbar = () => {
@@ -27,7 +27,7 @@ const Navbar = () => {
 		}))
 	}
 
-	const { home, about, contact } = isSelected
+	const { home, about, posts } = isSelected
 
 	return (
 		<React.Fragment>
@@ -64,17 +64,17 @@ const Navbar = () => {
 				</li>
 				<li className='nav-item' role='presentation'>
 					<Link
-						to='/contact'
-						className={`nav-link ${contact ? 'active' : ''}`}
-						id='contact-tab'
+						to='/posts'
+						className={`nav-link ${posts ? 'active' : ''}`}
+						id='posts-tab'
 						data-toggle='tab'
-						href='#contact'
+						href='#posts'
 						role='tab'
-						aria-controls='contact'
-						aria-selected={contact}
+						aria-controls='posts'
+						aria-selected={posts}
 						onClick={onSelect}
 					>
-						Contact
+						Posts
 					</Link>
 				</li>
 			</ul>

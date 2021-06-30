@@ -72,13 +72,13 @@ const Home = (props: {
 							cursor: 'pointer',
 							margin: 0,
 							marginLeft: '-2.5rem',
-							marginTop: '1.5rem'
+							marginTop: '1.75rem'
 						}}
 						onMouseOver={MouseOver}
 						onMouseOut={MouseOut}
 						onClick={() => onClickAdd('home')}
 					/>
-					<h1 style={{ marginLeft: '1.5rem' }}>Home</h1>
+					<h2 style={{ marginLeft: '1.5rem' }}>Home</h2>
 				</HStack>
 				{add.home ? (
 					<React.Fragment>
@@ -91,7 +91,11 @@ const Home = (props: {
 						<button
 							type='button'
 							className='btn btn-light'
-							style={{ color: '#555555', borderColor: '#C4C4C4' }}
+							style={{
+								color: '#555555',
+								borderColor: 'white',
+								margin: '0.25rem'
+							}}
 							onClick={(e) => {
 								!bool ? setBool(true) : setBool(false)
 								events(e)
@@ -144,13 +148,13 @@ const Home = (props: {
 								cursor: 'pointer',
 								margin: 0,
 								marginLeft: '-2.5rem',
-								marginTop: '1.5rem'
+								marginTop: '1.75rem'
 							}}
 							onMouseOver={MouseOver}
 							onMouseOut={MouseOut}
 							onClick={() => onClickAdd('work')}
 						/>
-						<h1 style={{ marginLeft: '1.5rem' }}>Work Experience</h1>
+						<h2 style={{ marginLeft: '1.5rem' }}>Work Experience</h2>
 					</HStack>
 				</Section>
 				{add.work ? (

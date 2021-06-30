@@ -7,7 +7,7 @@ import { Spacer, Section } from '../styles/component.styles'
 import { change } from '../utility/analytics'
 import * as helm from '../json/content.json'
 
-class Contact extends React.Component<
+class Posts extends React.Component<
 	{
 		add: any
 		MouseOver: (e: any) => void
@@ -28,37 +28,31 @@ class Contact extends React.Component<
 			<React.Fragment>
 				<Helmet>
 					<meta charSet='utf-8' />
-					<title>Coby Eastwood: Contact</title>
+					<title>Coby Eastwood: Posts</title>
 					<meta name='description' content={helm.content} />
-					<link rel='canonical' href='https://cobyeastwood.com/contact'></link>
+					<link rel='canonical' href='https://cobyeastwood.com/posts'></link>
 				</Helmet>
 				<Spacer />
 				<Section>
 					<HStack>
 						<i
-							className={`far fa-${add.home ? 'minus' : 'plus'}-square mb-4`}
+							className={`far fa-${add.posts ? 'minus' : 'plus'}-square mb-4`}
 							style={{
 								cursor: 'pointer',
 								margin: 0,
 								marginLeft: '-2.5rem',
-								marginTop: '1.5rem'
+								marginTop: '1.75rem'
 							}}
 							onMouseOver={MouseOver}
 							onMouseOut={MouseOut}
-							onClick={() => onClickAdd('contact')}
+							onClick={() => onClickAdd('posts')}
 						/>
-						<h1 style={{ marginLeft: '1.5rem' }}>Contact</h1>
+						<h2 style={{ marginLeft: '1.5rem' }}>Posts</h2>
 					</HStack>
-					{add.contact ? (
+					{add.posts ? (
 						<React.Fragment>
-							<br />
-							<p>
-								Thank you for stopping by! If you have some time, you can
-								checkout some of my projects on GitHub —{' '}
-								<strong>cobyeastwood</strong>. If you are trying to get a hold
-								of me, feel free to shoot an email to{' '}
-								<strong>cobyeastwood&#64;gmail.com</strong>.
-							</p>
+							<Section />
+							<h4 style={{ textAlign: 'center' }}>Good Components</h4>
 						</React.Fragment>
 					) : (
 						''
@@ -69,4 +63,4 @@ class Contact extends React.Component<
 	}
 }
 
-export default Contact
+export default Posts
