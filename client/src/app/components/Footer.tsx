@@ -121,8 +121,7 @@ const Footer = () => {
 					className='card-header'
 					style={{
 						color: 'white',
-						background: '#19BC9B',
-						opacity: 0.55,
+						background: '#43C8AE',
 						borderColor: '#C4C4C4'
 					}}
 				>
