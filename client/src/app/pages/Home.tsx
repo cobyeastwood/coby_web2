@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
 import { Helmet } from 'react-helmet'
 
-import { HStack } from '@chakra-ui/react'
+import { HStack, Button } from '@chakra-ui/react'
 
 import { v4 as uuidv4 } from 'uuid'
 import { connect } from 'react-redux'
@@ -35,23 +35,40 @@ const Home = (props: {
 	clicks: (e: Events) => ClicksAction
 }) => {
 	const [typi, setTypi] = useState([backup[0]])
+	const [loading, setLoading] = useState(false)
 	const [bool, setBool] = useState(false)
 
-	useEffect(() => {
-		if (window) {
-			change(window)
+	if (window) {
+		change(window)
+	}
+
+	async function axiosGet(e: any) {
+		events(e)
+		clicks(e)
+
+		if (bool === true) {
+			setBool(false)
+			setLoading(false)
+			return
 		}
 
-		async function axiosGet() {
-			try {
-				const { status, data } = await axios.get('/api/v1/typicode')
-				if (status === 200 && data && data.id) {
-					setTypi([data])
-				}
-			} catch (e) {}
+		setLoading(true)
+
+		const rand = Math.round(Math.random() * 100)
+
+		try {
+			const { status, data } = await axios.get(
+				`https://jsonplaceholder.typicode.com/todos/${rand}`
+			)
+			if (status === 200 && data && data.id) {
+				setTypi([data])
+				setBool((prevState) => !prevState)
+			}
+		} catch (e) {
+		} finally {
+			setLoading(false)
 		}
-		axiosGet()
-	}, [typi])
+	}
 
 	const { add = {}, onClickAdd, MouseOut, MouseOver } = props
 
@@ -85,25 +102,24 @@ const Home = (props: {
 						<br />
 						<p className='text-break'>
 							Use the "Test Button" to see how an asynchronous fetch is handled
-							in React with useEffect hooks.
+							in React with hooks.
 						</p>
 						<br />
-						<button
-							type='button'
+
+						<Button
+							isLoading={loading}
+							colorScheme='teal'
+							variant='outline'
 							className='btn btn-light'
 							style={{
 								color: '#555555',
 								borderColor: 'white',
 								margin: '0.25rem'
 							}}
-							onClick={(e) => {
-								!bool ? setBool(true) : setBool(false)
-								events(e)
-								clicks(e)
-							}}
+							onClick={(e) => axiosGet(e)}
 						>
 							Test Button
-						</button>
+						</Button>
 						<span>
 							{bool
 								? typi.map((t) => (
@@ -115,14 +131,6 @@ const Home = (props: {
 											id: {t.id}
 											<br />
 											completed: {t.completed === true ? 'true' : 'false'}
-											{t.id !== 104 ? (
-												<React.Fragment>
-													<br />
-													<br />
-													Still curious? Checkout the{' '}
-													<a href='/api/v1/typicode'>route</a>.
-												</React.Fragment>
-											) : null}
 										</P2>
 								  ))
 								: null}

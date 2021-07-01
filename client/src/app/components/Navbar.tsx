@@ -34,7 +34,7 @@ const Navbar = () => {
 			case '':
 				setSelected((prevState: any) => ({
 					...initialState,
-					['home']: !prevState['home']
+					home: !prevState['home']
 				}))
 				break
 			default:

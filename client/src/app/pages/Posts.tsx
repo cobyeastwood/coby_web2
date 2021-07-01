@@ -33,7 +33,7 @@ class Posts extends React.Component<
 	onClickHover = () =>
 		this.setState((prevState: any) => ({
 			...prevState,
-			['hover']: !prevState.hover
+			hover: !prevState.hover
 		}))
 
 	componentDidMount() {
