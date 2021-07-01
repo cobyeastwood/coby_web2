@@ -7,7 +7,8 @@ import {
 	SmallSpacer,
 	Spacer,
 	Section,
-	P2 as P
+	P2,
+	P1
 } from '../styles/component.styles'
 import { change } from '../utility/analytics'
 import * as helm from '../json/content.json'
@@ -25,9 +26,15 @@ class Posts extends React.Component<
 	constructor(props: any, public state: any) {
 		super(props)
 		this.state = {
-			hover: true
+			hover: true,
+			width: window.innerWidth || 0
 		}
-		this.onClickHover.bind(this)
+		this.onClickHover = this.onClickHover.bind(this)
+		this.handleWindowSizeChange = this.handleWindowSizeChange.bind(this)
+	}
+
+	handleWindowSizeChange() {
+		this.setState((prevState) => ({ ...prevState, width: window.innerWidth }))
 	}
 
 	onClickHover = () =>
@@ -39,11 +46,24 @@ class Posts extends React.Component<
 	componentDidMount() {
 		if (window) {
 			change(window)
+			window.addEventListener('resize', this.handleWindowSizeChange)
+		}
+	}
+
+	componentDidUpdate() {
+		if (window) {
+			window.removeEventListener('resize', this.handleWindowSizeChange)
 		}
 	}
 
 	render() {
+		const { width } = this.state
 		const { add = {}, onClickAdd, MouseOut, MouseOver } = this.props
+
+		let isMobile: boolean = width !== 0 && width <= 768
+
+		const P = isMobile ? P1 : P2
+
 		return (
 			<React.Fragment>
 				<Helmet>
@@ -119,6 +139,7 @@ class Posts extends React.Component<
 											Three ways to writing effective Go applications.
 										</em>
 									</P>
+									<SmallSpacer />
 									<P>
 										<em
 											style={{
@@ -132,7 +153,7 @@ class Posts extends React.Component<
 											connections.
 										</em>{' '}
 									</P>
-									<P style={{ margin: '2rem' }}>
+									<P>
 										In Node.js it is in best practice to keep data outside of
 										the global scope, and in the Go programming language, this
 										concept is no different. One benefit of using Go is
@@ -144,12 +165,13 @@ class Posts extends React.Component<
 										all our database connections as a parameter to be used
 										throughout our application.
 									</P>
-									<P style={{ margin: '2rem' }}>
+									<P>
 										Check out an{' '}
 										<a href='https://github.com/cobyeastwood/ObsessOvers/blob/19e16e6ad27b9f2bdeaca9fb374b83ac8cc8b1c7/api/v1.go#L25'>
 											example.
 										</a>
 									</P>
+									<SmallSpacer />
 									<P>
 										{' '}
 										<em
@@ -163,7 +185,7 @@ class Posts extends React.Component<
 											2. Using interfaces.
 										</em>{' '}
 									</P>
-									<P style={{ margin: '2rem' }}>
+									<P>
 										Apart from assisting in the use of generics, interfaces can
 										be used to maintain code simplicity. With interfaces, we can
 										cut down functions into compact utilities that only accept
@@ -173,12 +195,13 @@ class Posts extends React.Component<
 										— Go Docs uses a built-in File interface for the for the
 										HTTP package.
 									</P>
-									<P style={{ margin: '2rem' }}>
+									<P>
 										Check out the{' '}
 										<a href='https://golang.org/pkg/net/http/#File'>
 											File interface.
 										</a>
 									</P>
+									<SmallSpacer />
 									<P>
 										{' '}
 										<em
@@ -192,7 +215,7 @@ class Posts extends React.Component<
 											3. Dealing with Go errors.{' '}
 										</em>{' '}
 									</P>{' '}
-									<P style={{ margin: '2rem' }}>
+									<P>
 										A lot of Developers can struggle with error handling and Go
 										makes this easy. In Node.js we wrap often asynchronous code
 										in a try-catch then a callback — with two parameters an
@@ -207,7 +230,7 @@ class Posts extends React.Component<
 										the Reader method is called this new variable can now be
 										used.
 									</P>{' '}
-									<P style={{ margin: '2rem' }}>
+									<P>
 										Check out an{' '}
 										<a href='https://blog.golang.org/go1.13-errors'>example.</a>
 									</P>

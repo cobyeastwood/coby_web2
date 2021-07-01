@@ -1,7 +1,12 @@
 import React from 'react'
 import styled from 'styled-components'
 
-import { P } from '../styles/component.styles'
+import {
+	P,
+	Section,
+	Spacer as LargeSpacer,
+	SmallSpacer
+} from '../styles/component.styles'
 import { change } from '../utility/analytics'
 
 const Spacer = styled.h1`
@@ -18,8 +23,11 @@ class NotFound extends React.Component {
 	render() {
 		return (
 			<React.Fragment>
-				<Spacer>404 - Not Found</Spacer>
-				<P>Sorry, this page was not found.</P>
+				<Section>
+					<LargeSpacer />
+					<Spacer>404 - Not Found</Spacer>
+					<P>Sorry, this page was not found.</P>
+				</Section>
 			</React.Fragment>
 		)
 	}

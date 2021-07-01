@@ -14,9 +14,14 @@ export const P = styled.p`
 	margin: 1rem;
 	text-align: center;
 `
+export const P1 = styled.p`
+	margin-top: 1rem;
+	margin-bottom: 1rem;
+`
 
 export const P2 = styled.p`
-	margin: 1.5rem;
+	margin-left: 2rem;
+	margin-right: 2rem;
 `
 
 export const Span = styled.div`
