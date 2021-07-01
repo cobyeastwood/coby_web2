@@ -15,32 +15,6 @@ const P = styled.p`
 	font-size: 16px;
 `
 
-const A = styled.a`
-	font-size: 16px;
-`
-
-type UserQuote = User & Quote
-
-interface User {
-	userId: number
-	id: number
-	title: string
-	completed: boolean
-}
-
-interface Quote {
-	content: string
-	id: number
-	language_code: string
-	originator: {
-		id: number
-		name: string
-		url: string
-	}
-	tags: string[]
-	url: string
-}
-
 const Footer = () => {
 	const [active, setActive] = useState('')
 	const [quote, setQuote] = useState([backup[1]])
