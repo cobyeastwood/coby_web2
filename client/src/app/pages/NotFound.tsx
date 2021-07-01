@@ -1,12 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 
-import {
-	P,
-	Section,
-	Spacer as LargeSpacer,
-	SmallSpacer
-} from '../styles/component.styles'
+import { P, Section, Spacer as LargeSpacer } from '../styles/component.styles'
 import { change } from '../utility/analytics'
 
 const Spacer = styled.h1`
