@@ -13,8 +13,36 @@ const initialState = {
 	posts: false
 }
 
+var runs: number = 0
+
 const Navbar = () => {
 	const [isSelected, setSelected] = useState(initialState)
+
+	var current: string = ''
+
+	if (window && runs === 0) {
+		current = window.location.pathname.replace('/', '')
+
+		switch (current) {
+			case 'posts':
+			case 'about':
+				setSelected((prevState: any) => ({
+					...initialState,
+					[current]: !prevState[current]
+				}))
+				break
+			case '':
+				setSelected((prevState: any) => ({
+					...initialState,
+					['home']: !prevState['home']
+				}))
+				break
+			default:
+				break
+		}
+
+		runs++
+	}
 
 	const onSelect = (e: any) => {
 		const key = e.target.getAttribute('aria-controls') || ''
