@@ -3,7 +3,12 @@ import { Helmet } from 'react-helmet'
 
 import { HStack, Box } from '@chakra-ui/react'
 
-import { Spacer, Section } from '../styles/component.styles'
+import {
+	SmallSpacer,
+	Spacer,
+	Section,
+	P2 as P
+} from '../styles/component.styles'
 import { change } from '../utility/analytics'
 import * as helm from '../json/content.json'
 
@@ -77,23 +82,57 @@ class Posts extends React.Component<
 									Writing Programs In Golang [{this.state.hover ? '-' : '+'}]
 								</Box>
 							</h4>
+							<SmallSpacer />
 							{this.state.hover ? (
 								<React.Fragment>
-									<p>
+									<P>
 										<strong
-											style={{ fontSize: '30px', fontFamily: 'Georgia, serif' }}
+											style={{
+												fontSize: '20px',
+												fontFamily: 'Georgia, serif',
+												margin: 0,
+												padding: '-1rem'
+											}}
 										>
 											I
 										</strong>{' '}
-										usually write in Node.js but have been dabbling with Go on
-										my own time as an alternative for backend web development.
-										After working on a side project called Obsess Overs, I
-										figured I would write a short piece on some best ways or
+										usually write code in Node.js but have been dabbling with Go
+										for backend web development. After working on a side project
+										called{' '}
+										<a href='https://github.com/cobyeastwood/ObsessOvers'>
+											Obsess Overs
+										</a>
+										, I figured I would write a short piece on some best ways or
 										tips for using Go on the backend.
-									</p>
-									<p>Three ways to writing effective Go applications.</p>
-									<p>
-										(1) High-order functions for passing database connections.
+									</P>
+									<SmallSpacer />
+									<P>
+										{' '}
+										<em
+											style={{
+												fontSize: '20px',
+												fontFamily: 'Georgia, serif',
+												margin: 0,
+												padding: '-1rem'
+											}}
+										>
+											Three ways to writing effective Go applications.
+										</em>
+									</P>
+									<P>
+										<em
+											style={{
+												fontSize: '16px',
+												fontFamily: 'Georgia, serif',
+												margin: 0,
+												padding: '-1rem'
+											}}
+										>
+											1. Making high-order functions for passing database
+											connections.
+										</em>{' '}
+									</P>
+									<P style={{ margin: '2rem' }}>
 										In Node.js it is in best practice to keep data outside of
 										the global scope, and in the Go programming language, this
 										concept is no different. One benefit of using Go is
@@ -103,24 +142,74 @@ class Posts extends React.Component<
 										information inside the local scope. By wrapping an HTTP
 										handler in a high-order function we can provide access to
 										all our database connections as a parameter to be used
-										throughout our application. Check out an example here.
-									</p>
-									<p>(2) Using interfaces. </p>
-									<p>
-										(3) Dealing with Go errors. A lot of Software Developers can
-										struggle with error handling and Go makes this easy. In
-										Node.js we wrap often asynchronous code in a try-catch then
-										a callback with two parameters an error and a result. In Go,
-										we are forced to handle these errors on the spot. An
-										effective way to dealing with this issue is to use named
-										errors (lowercase is the convention) throughout the program
-										with a descriptive message pointing to what exactly went
-										wrong. This can be an error reading from a file, for example
-										using the io.Reader method in Go and naming the error
-										"cannot read from file" + some specifics on the file being
-										called. In instances where the Reader method is called this
-										new variable can now be used. Check out an example here.
-									</p>{' '}
+										throughout our application.
+									</P>
+									<P style={{ margin: '2rem' }}>
+										Check out an{' '}
+										<a href='https://github.com/cobyeastwood/ObsessOvers/blob/19e16e6ad27b9f2bdeaca9fb374b83ac8cc8b1c7/api/v1.go#L25'>
+											example.
+										</a>
+									</P>
+									<P>
+										{' '}
+										<em
+											style={{
+												fontSize: '16px',
+												fontFamily: 'Georgia, serif',
+												margin: 0,
+												padding: '-1rem'
+											}}
+										>
+											2. Using interfaces.
+										</em>{' '}
+									</P>
+									<P style={{ margin: '2rem' }}>
+										Apart from assisting in the use of generics, interfaces can
+										be used to maintain code simplicity. With interfaces, we can
+										cut down functions into compact utilities that only accept
+										an interface and its types. Writing good interfaces starts
+										with defining a given type that encompasses programs' needs.
+										For instance, an interface could be used to define a service
+										— Go Docs uses a built-in File interface for the for the
+										HTTP package.
+									</P>
+									<P style={{ margin: '2rem' }}>
+										Check out the{' '}
+										<a href='https://golang.org/pkg/net/http/#File'>
+											File interface.
+										</a>
+									</P>
+									<P>
+										{' '}
+										<em
+											style={{
+												fontSize: '16px',
+												fontFamily: 'Georgia, serif',
+												margin: 0,
+												padding: '-1rem'
+											}}
+										>
+											3. Dealing with Go errors.{' '}
+										</em>{' '}
+									</P>{' '}
+									<P style={{ margin: '2rem' }}>
+										A lot of Developers can struggle with error handling and Go
+										makes this easy. In Node.js we wrap often asynchronous code
+										in a try-catch then a callback with two parameters an error
+										and a result. In Go, we are forced to handle these errors on
+										the spot. An effective way to dealing with this issue is to
+										use named errors (lowercase is the convention) throughout
+										the program with a descriptive message pointing to what
+										exactly went wrong. This can be an error reading from a
+										file, for example using the io.Reader method in Go and
+										naming the error "cannot read from file" + some specifics on
+										the file being called. In instances where the Reader method
+										is called this new variable can now be used.
+									</P>{' '}
+									<P style={{ margin: '2rem' }}>
+										Check out an{' '}
+										<a href='https://blog.golang.org/go1.13-errors'>example.</a>
+									</P>
 								</React.Fragment>
 							) : (
 								''

@@ -111,9 +111,23 @@ const Footer = () => {
 					</label>
 				</div>
 			</Span>
-			<Div className='card'>
-				<div className='card-header' style={{ color: '#555555' }}>
-					Quote I Like
+			<Div
+				className='card'
+				style={{
+					backgroundColor: '#ECF0F1',
+					borderColor: 'white',
+					opacity: '.8'
+				}}
+			>
+				<div
+					className='card-header'
+					style={{
+						backgroundColor: '#ECF0F1',
+						color: '#555555',
+						borderColor: 'white'
+					}}
+				>
+					Quote to Inspire
 				</div>
 				<div className='card-body'>
 					<blockquote className='blockquote mb-0'>
@@ -123,8 +137,15 @@ const Footer = () => {
 										<P style={{ color: '#555555' }} key={i++}>
 											<em>{q.content || ''}</em>
 										</P>
-										<footer key={i++} className='blockquote-footer'>
-											<cite key={i++}>
+										<footer
+											key={i++}
+											className='blockquote-footer'
+											style={{ color: '#555555', opacity: '.8' }}
+										>
+											<cite
+												key={i++}
+												style={{ color: '#555555', opacity: '.8' }}
+											>
 												{q.originator.name ? q.originator.name : ''}
 											</cite>
 										</footer>
