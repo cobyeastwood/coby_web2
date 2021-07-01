@@ -16,8 +16,10 @@ import (
 
 func main() {
 
-	port := ":" + os.Getenv("PORT")
-	static := "./web"
+	os.Setenv("PORT", "8080")
+
+	port := ":" + (os.Getenv("PORT"))
+	static := "./client/build"
 
 	r := chi.NewRouter()
 

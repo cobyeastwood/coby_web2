@@ -6,6 +6,10 @@ nginx.conf
 .env
 *.env
 
+# Keys
+*.crt
+*.pem
+
 ### Go ###
 # Binaries for programs and plugins
 *.exe
