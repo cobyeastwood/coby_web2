@@ -8,7 +8,7 @@ import styled from 'styled-components'
 const axios = require('axios').default
 
 const Div = styled.div`
-	margin-top: 10rem;
+	margin-top: 5rem;
 `
 
 const P = styled.p`
@@ -116,7 +116,8 @@ const Footer = () => {
 				style={{
 					backgroundColor: '#ECF0F1',
 					borderColor: 'white',
-					opacity: '.8'
+					opacity: '.8',
+					marginBottom: '5rem'
 				}}
 			>
 				<div

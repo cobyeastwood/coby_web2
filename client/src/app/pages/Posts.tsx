@@ -195,16 +195,17 @@ class Posts extends React.Component<
 									<P style={{ margin: '2rem' }}>
 										A lot of Developers can struggle with error handling and Go
 										makes this easy. In Node.js we wrap often asynchronous code
-										in a try-catch then a callback with two parameters an error
-										and a result. In Go, we are forced to handle these errors on
-										the spot. An effective way to dealing with this issue is to
-										use named errors (lowercase is the convention) throughout
-										the program with a descriptive message pointing to what
-										exactly went wrong. This can be an error reading from a
-										file, for example using the io.Reader method in Go and
-										naming the error "cannot read from file" + some specifics on
-										the file being called. In instances where the Reader method
-										is called this new variable can now be used.
+										in a try-catch then a callback — with two parameters an
+										error (null if not present) and a result. In Go, we are
+										forced to handle these errors on the spot. An effective way
+										to dealing with this issue is to use named errors (lowercase
+										is the convention) throughout the program with a descriptive
+										message pointing to what exactly went wrong. This can be an
+										error reading from a file, for example using the io.Reader
+										method in Go and naming the error "cannot read from file" +
+										some specifics on the file being called. In instances where
+										the Reader method is called this new variable can now be
+										used.
 									</P>{' '}
 									<P style={{ margin: '2rem' }}>
 										Check out an{' '}
