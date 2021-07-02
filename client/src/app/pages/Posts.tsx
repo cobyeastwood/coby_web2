@@ -94,6 +94,7 @@ class Posts extends React.Component<
 							<Section />
 							<h4 style={{ textAlign: 'center' }} onClick={this.onClickHover}>
 								<Box
+									id='#writingProgramsInGolang'
 									style={{
 										cursor: 'pointer',
 										display: 'block'
@@ -154,16 +155,16 @@ class Posts extends React.Component<
 										</em>{' '}
 									</P>
 									<P>
-										In Node.js it is in best practice to keep data outside of
-										the global scope, and in the Go programming language, this
-										concept is no different. One benefit of using Go is
-										compartmentalizing code into different sections that achieve
-										a collective operation. Utilizing a struct for holding
-										memory addresses is one great way to keep code clean and
-										information inside the local scope. By wrapping an HTTP
+										In JavaScript it is in best practice to keep variables
+										outside of the global scope, and in the Go programming
+										language, this concept is no different. One benefit of using
+										Go is compartmentalizing code into different sections that
+										achieve a collective operation. Utilizing a struct for
+										holding memory addresses is one great way to keep code clean
+										and information inside the local scope. By wrapping an HTTP
 										handler in a high-order function we can provide access to
-										all our database connections as a parameter to be used
-										throughout our application.
+										all our database connections as a function argument to be
+										used throughout our application.
 									</P>
 									<P>
 										Check out an{' '}
@@ -192,13 +193,20 @@ class Posts extends React.Component<
 										an interface and its types. Writing good interfaces starts
 										with defining a given type that encompasses programs' needs.
 										For instance, an interface could be used to define a service
-										— Go Docs uses a built-in File interface for the for the
-										HTTP package.
+										— the io package uses a built-in Writer interface to define
+										minimum requirements. The Writer interface helps out when we
+										start using the http package and need to create a custom
+										Write method on an incoming{' '}
+										<a href='https://golang.org/pkg/net/http/#Request.Write'>
+											Request
+										</a>{' '}
+										that simply specifies the output types requested in the
+										interface definition.
 									</P>
 									<P>
 										Check out the{' '}
-										<a href='https://golang.org/pkg/net/http/#File'>
-											File interface.
+										<a href='https://golang.org/pkg/io/#Writer'>
+											io.Writer interface.
 										</a>
 									</P>
 									<SmallSpacer />
@@ -217,18 +225,20 @@ class Posts extends React.Component<
 									</P>{' '}
 									<P>
 										A lot of Developers can struggle with error handling and Go
-										makes this easy. In Node.js we wrap often asynchronous code
-										in a try-catch then a callback — with two parameters an
-										error (null if not present) and a result. In Go, we are
-										forced to handle these errors on the spot. An effective way
-										to dealing with this issue is to use named errors (lowercase
-										is the convention) throughout the program with a descriptive
-										message pointing to what exactly went wrong. This can be an
-										error reading from a file, for example using the io.Reader
-										method in Go and naming the error "cannot read from file" +
+										makes solving these issues easy. In Node.js we often wrap
+										asynchronous code in a try-catch block and final results in
+										a callback — with two parameters an error (null if not
+										present) and the collected data. In Go, we are forced to
+										handle errors including async errors on the spot. An
+										effective way to dealing with this issue is to use named
+										errors (lowercase is the convention) throughout the program
+										with a descriptive message pointing to what exactly went
+										wrong. This could be an error received by the io.Reader
+										interface in Go after reading from a particular file. In
+										this example, naming the error "cannot read from file" plus
 										some specifics on the file being called. In instances where
-										the Reader method is called this new variable can now be
-										used.
+										the Reader method is called this new named error variable
+										can now be used to simplify our codebase.
 									</P>{' '}
 									<P>
 										Check out an{' '}
